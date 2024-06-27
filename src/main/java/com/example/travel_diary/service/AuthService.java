@@ -1,24 +1,31 @@
 package com.example.travel_diary.service;
 
 
+import com.example.travel_diary.global.request.FindLoginIdRequestDto;
+import com.example.travel_diary.global.request.FindPasswordRequestDto;
 import com.example.travel_diary.global.request.SignInRequestDto;
 import com.example.travel_diary.global.request.SignUpRequestDto;
 import com.example.travel_diary.global.response.GetUserByIdResponseDto;
+import com.example.travel_diary.global.response.LoginInResponseDto;
 
 import java.util.UUID;
 
 public interface AuthService {
-    void signUp(SignUpRequestDto signUpRequestDto);
-    void signIn(SignInRequestDto signInReqestDto);
+    UUID signUp(SignUpRequestDto signUpRequestDto) throws Exception;
+    LoginInResponseDto signIn(SignInRequestDto signInRequestDto) throws Exception;
 
-    GetUserByIdResponseDto getUserById(UUID id);
+    String possibleUserByEmail(String email) throws Exception;
 
-    void updateUserNickname(String nickname);
+    String possibleUserByLoginId(String loginId) throws Exception;
 
-    void updateUserPassword(String password);
+    GetUserByIdResponseDto getUserById(UUID id) throws Exception;
 
-    void deleteUserById(UUID id);
+    void updateUserNickname(UUID id, String nickname) throws Exception;
 
-    void findLoginId(String email);
-    void findPassword(String loginId);
+    void updateUserPassword(UUID id, String password) throws Exception;
+
+    void deleteUserById(UUID id) throws Exception;
+
+    void findLoginId(FindLoginIdRequestDto req) throws Exception;
+    void findPassword(FindPasswordRequestDto req) throws Exception;
 }

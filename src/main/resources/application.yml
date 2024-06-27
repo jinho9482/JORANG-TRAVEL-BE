@@ -2,12 +2,18 @@ spring:
   application:
     name: travel-diary
   datasource:
-    url: jdbc:mysql://localhost:3306/user?characterEncoding=UTF-8&serverTimezone=Asia/Seoul # localhost? ??? kube?? service??? ?? ??
+    url: jdbc:mysql://localhost:3306/jorang?characterEncoding=UTF-8&serverTimezone=Asia/Seoul # localhost? ??? kube?? service??? ?? ??
     username: root # {DB_USER} -> ??? ?? ??? ?? ??
     password: 1234 # {DB_PASSWORD} -> ??? ?? ??? ?? ??
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
+mail:
+  sender: ksh58997941@gmail.com
+  password: yctq gzba uorl gitm
 
+jwt:
+  secret: asdfaasdpvhiashpdiorj490u2903412931avuyhguykg
+  expiration: 60000000 # 100 minutes
