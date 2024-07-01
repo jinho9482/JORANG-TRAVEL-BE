@@ -5,14 +5,15 @@ import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.domain.repository.PostRepository;
 import com.example.travel_diary.global.domain.type.Scope;
 import com.example.travel_diary.global.exception.PostNotPublicException;
+
 import com.example.travel_diary.global.exception.PostNotFoundException;
-import com.example.travel_diary.global.request.PostRequestDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -30,7 +31,7 @@ public class PostServiceImpl implements PostService {
     // 여행 일지 작성 누르면 바로 post id를 생성 시킴, 업데이트도 작성일자만 갱신
     @Override
     @Transactional
-    public Long createPost(User user) {
+    public Long createPost(@AuthenticationPrincipal User user) {
         Post post = postRepository.save(Post.builder().user(user).build());
         return post.getId();
     }
@@ -44,18 +45,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void update(Long id, PostRequestDto req) {
+    public void update(Long id, String title) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
-        post.setTitle(req.title());
-        post.setCountry(req.country());
-        post.setScope(req.scope());
+        post.setTitle(title);
         post.setCreatedAt(LocalDateTime.now());
-        post.setPublished(true);
     }
 
     @Override
     public List<Post> getAll() {
-        return postRepository.findAllByScopeAndIsPublished(Scope.PUBLIC, true);
+        return postRepository.findAllByScope(Scope.PUBLIC);
     }
 
     @Override
@@ -67,23 +65,26 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getMyPostById(User user, Long id) {
+
         return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
     }
 
+
     @Override
     public List<Post> getRecentPostsFirst() {
-        return postRepository.findAllByScopeAndIsPublishedOrderByCreatedAtDesc(Scope.PUBLIC, true);
+        return postRepository.findAllByDiaries_ScopeOrderByCreatedAtDesc(Scope.PUBLIC);
     }
 
     @Override
     public List<Post> getRecent5PostsByCountry(String country) {
-        return postRepository.findTop5ByScopeAndCountryAndIsPublishedOrderByCreatedAtDesc(Scope.PUBLIC, country, true);
+        return postRepository.findTop5ByDiaries_ScopeAndDiaries_CountryOrderByCreatedAtDesc(Scope.PUBLIC, country);
     }
 
     @Override
     public List<Post> getRecentPostsFirstByCountry(String country) {
-        return postRepository.findAllByScopeAndCountryAndIsPublishedOrderByCreatedAtDesc(Scope.PUBLIC, country, true);
+        return postRepository.findAllByDiaries_ScopeAndDiaries_CountryOrderByCreatedAtDesc(Scope.PUBLIC, country.toLowerCase());
     }
+
 
     @Override
     public List<Post> getTop5LikeOnThisWeek() {
@@ -93,12 +94,12 @@ public class PostServiceImpl implements PostService {
         System.out.println(today);
         System.out.println(startOfWeek);
         System.out.println(endOfWeek);
-        return postRepository.findTop5ByScopeAndIsPublishedAndCreatedAtBetweenOrderByLoveDesc(Scope.PUBLIC, true, startOfWeek, endOfWeek);
+        return postRepository.findTop5ByDiaries_ScopeAndCreatedAtBetweenOrderByLoveDesc(Scope.PUBLIC, startOfWeek, endOfWeek);
     }
 
     @Override
     public List<Post> getRecentPostsFirstBetweenTheseDates(LocalDate from, LocalDate to) {
-        return postRepository.findAllByScopeAndIsPublishedAndCreatedAtBetweenOrderByCreatedAtDesc(Scope.PUBLIC, true, from, to);
+        return postRepository.findAllByScopeAndDiaries_DateBetweenOrderByCreatedAtDesc(Scope.PUBLIC, from, to);
     }
 
     @Override
@@ -116,7 +117,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getTop5RecentPosts() {
-        return postRepository.findTop5ByScopeAndIsPublishedOrderByCreatedAtDesc(Scope.PUBLIC, true);
+        return postRepository.findTop5ByScopeOrderByCreatedAtDesc(Scope.PUBLIC);
     }
 
 

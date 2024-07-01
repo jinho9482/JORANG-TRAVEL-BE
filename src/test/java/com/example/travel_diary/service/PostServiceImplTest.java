@@ -77,7 +77,9 @@ class PostServiceImplTest {
                     .title("publicTitle"+ i)
                     .content("publicContent" + i)
                     .date(LocalDate.now().plusDays(i))
+                    .scope(Scope.PUBLIC)
                     .createdAt(LocalDateTime.now())
+                    .country("publicCountry" + i)
                     .photos(new ArrayList<>())
                     .post(post)
                     .build();
@@ -101,7 +103,9 @@ class PostServiceImplTest {
                     .title("personalTitle" + i)
                     .content("personalContent" + i)
                     .date(LocalDate.now().plusDays(i))
+                    .scope(Scope.PERSONAL)
                     .createdAt(LocalDateTime.now())
+                    .country("personalCountry" + i)
                     .photos(new ArrayList<>())
                     .post(post)
                     .build();
@@ -133,26 +137,26 @@ class PostServiceImplTest {
         });
     }
 
-//    @Test
-//    void update_Success() {
-//        Post post = postRepository.findAll().get(0);
-//        LocalDateTime beforeUpdate = post.getCreatedAt();
-//        postService.update(post.getId(), "changeTitle");
-//        Optional<Post> byId = postRepository.findById(post.getId());
-//        assertTrue(byId.isPresent());
-//        Post updatePost = byId.get();
-//        LocalDateTime afterUpdate = updatePost.getCreatedAt();
-//        assertEquals("changeTitle",updatePost.getTitle());
-//        assertNotEquals(beforeUpdate, afterUpdate);
-//    }
+    @Test
+    void update_Success() {
+        Post post = postRepository.findAll().get(0);
+        LocalDateTime beforeUpdate = post.getCreatedAt();
+        postService.update(post.getId(), "changeTitle");
+        Optional<Post> byId = postRepository.findById(post.getId());
+        assertTrue(byId.isPresent());
+        Post updatePost = byId.get();
+        LocalDateTime afterUpdate = updatePost.getCreatedAt();
+        assertEquals("changeTitle",updatePost.getTitle());
+        assertNotEquals(beforeUpdate, afterUpdate);
+    }
 
-//    @Test
-//    void getAll_Success() {
-//        List<Post> all = postService.getAll();
-//        for (Post post : all) {
-//            assertEquals(Scope.PUBLIC,post.getDiaries().get(0).getScope());
-//        }
-//    }
+    @Test
+    void getAll_Success() {
+        List<Post> all = postService.getAll();
+        for (Post post : all) {
+            assertEquals(Scope.PUBLIC,post.getDiaries().get(0).getScope());
+        }
+    }
 
     @Test
     void getById_Success() {

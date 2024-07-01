@@ -2,7 +2,6 @@ package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Post;
 import com.example.travel_diary.global.domain.entity.User;
-import com.example.travel_diary.global.request.PostRequestDto;
 import com.example.travel_diary.service.PostService;
 import com.example.travel_diary.service.PostServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +33,11 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable(name = "id") Long id, @RequestBody PostRequestDto req) {
-        postService.update(id, req);
+    public void update(@PathVariable(name = "id") Long id, @RequestBody String title) {
+        postService.update(id, title);
     }
 
-    @GetMapping
+    @GetMapping()
     public List<Post> getAll() {
         return postService.getAll();
     }
@@ -48,11 +47,11 @@ public class PostController {
         return postService.getById(id);
     }
 
+
     @GetMapping("/my/{id}")
     public Post getMyPostById(@AuthenticationPrincipal User user, @PathVariable(name = "id") Long id) {
         return postService.getMyPostById(user, id);
     }
-
     @GetMapping("/recent")
     public List<Post> getRecentPostsFirst() {
         return postService.getRecentPostsFirst();

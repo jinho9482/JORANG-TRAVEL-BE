@@ -9,16 +9,19 @@ import java.time.LocalDateTime;
 public record ExpenseDetailRequestDto(
         int cost,
         String place,
-        String category,
-        String scope,
-        String country,
-        Expense expense
+
+        String category
+
+
+//        Expense expense
+
 ) {
-    public ExpenseDetail toEntity() {
+    public ExpenseDetail toEntity(Expense expense) {
         return ExpenseDetail.builder()
                 .cost(cost)
                 .place(place)
                 .category(category)
+
                 .createdAt(LocalDateTime.now())
                 .expense(expense)
                 .build();
