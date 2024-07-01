@@ -33,5 +33,6 @@ public interface PostService {
     Page<Post> getList(User user, int page);
 
     List<Post> getTop5RecentPosts();
+    List<Post> getUnpublishedPosts();
 
 }

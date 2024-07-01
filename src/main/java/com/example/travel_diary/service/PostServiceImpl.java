@@ -118,4 +118,9 @@ public class PostServiceImpl implements PostService {
     public List<Post> getTop5RecentPosts() {
         return postRepository.findTop5ByScopeAndIsPublishedOrderByCreatedAtDesc(Scope.PUBLIC, true);
     }
+
+    @Override
+    public List<Post> getUnpublishedPosts() {
+        return postRepository.findAllByIsPublishedOrderByCreatedAtDesc(false);
+    }
 }

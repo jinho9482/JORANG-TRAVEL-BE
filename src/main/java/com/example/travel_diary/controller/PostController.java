@@ -93,4 +93,9 @@ public class PostController {
     public Page<Post> list(@AuthenticationPrincipal User user, @RequestParam(value="page", defaultValue="0") int page) {
         return this.postService.getList(user, page);
     }
+
+    @GetMapping("/unpublished")
+    public List<Post> getUnpublishedPosts() {
+        return postService.getUnpublishedPosts();
+    }
 }
