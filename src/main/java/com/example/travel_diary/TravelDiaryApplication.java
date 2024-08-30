@@ -1,7 +1,6 @@
 package com.example.travel_diary;
 
 
-import com.example.travel_diary.global.config.ElasticSearchConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

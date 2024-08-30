@@ -18,8 +18,8 @@ public class ExpenseController {
 
     @PostMapping("/posts/{postId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@PathVariable(name = "postId") Long postId,@RequestBody ExpenseRequestDto expenseRequestDto) {
-        expenseService.saveExpense(postId,expenseRequestDto);
+    public long save(@PathVariable(name = "postId") Long postId,@RequestBody ExpenseRequestDto expenseRequestDto) {
+        return expenseService.saveExpense(postId,expenseRequestDto);
     }
 
 

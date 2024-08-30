@@ -18,4 +18,6 @@ public interface PhotoService {
     void update(Long id, MultipartFile file) throws IOException;
     // 삭제
     void deleteById(Long id);
+
+
 }

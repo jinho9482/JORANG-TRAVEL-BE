@@ -5,6 +5,7 @@ import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.domain.repository.PostRepository;
 import com.example.travel_diary.global.domain.type.Scope;
 import com.example.travel_diary.global.exception.PostNotPublicException;
+
 import com.example.travel_diary.global.exception.PostNotFoundException;
 import com.example.travel_diary.global.request.PostRequestDto;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -20,17 +22,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+
     // 여행 일지 작성 누르면 바로 post id를 생성 시킴, 업데이트도 작성일자만 갱신
     @Override
     @Transactional
-    public Long createPost(User user) {
+    public Long createPost(@AuthenticationPrincipal User user) {
         Post post = postRepository.save(Post.builder().user(user).build());
         return post.getId();
     }
@@ -55,20 +60,22 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAll() {
-        return postRepository.findAllByScopeAndIsPublished(Scope.PUBLIC, true);
+        return postRepository.findAllByScope(Scope.PUBLIC);
     }
 
     @Override
     public Post getById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
-        if(!post.getScope().equals(Scope.PUBLIC)) throw new PostNotPublicException();
+        if (!post.getScope().equals(Scope.PUBLIC)) throw new PostNotPublicException();
         return post;
     }
 
     @Override
     public Post getMyPostById(User user, Long id) {
+
         return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
     }
+
 
     @Override
     public List<Post> getRecentPostsFirst() {
@@ -84,6 +91,7 @@ public class PostServiceImpl implements PostService {
     public List<Post> getRecentPostsFirstByCountry(String country) {
         return postRepository.findAllByScopeAndCountryAndIsPublishedOrderByCreatedAtDesc(Scope.PUBLIC, country, true);
     }
+
 
     @Override
     public List<Post> getTop5LikeOnThisWeek() {
@@ -103,7 +111,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllByUser(User user) {
-        return postRepository.findAllByUserOrderByCreatedAtDesc (user);
+        return postRepository.findAllByUserOrderByCreatedAtDesc(user);
     }
 
     @Override
@@ -122,5 +130,18 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getUnpublishedPosts() {
         return postRepository.findAllByIsPublishedOrderByCreatedAtDesc(false);
+    }
+
+//    @Override
+//    public Set<String> getCountriesFromMyPosts(User user) {
+//        List<Post> posts = postRepository.findAllByUser(user);
+//        Set<String> countries = new HashSet<>();
+//        posts.forEach((post) -> countries.add(post.getCountry()));
+//        return countries;
+//    }
+
+    @Override
+    public List<Post> getMyPosts(User user) {
+        return postRepository.findAllByUser(user);
     }
 }

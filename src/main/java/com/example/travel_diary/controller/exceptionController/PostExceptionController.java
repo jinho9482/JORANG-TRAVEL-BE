@@ -8,9 +8,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class PostExceptionController {
+
+
+//    @ExceptionHandler(PostNotFoundException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public String postNotFoundExceptionHandler(PostNotFoundException e) {
+//        return e.getMessage();
+//    }
+
     @ExceptionHandler(PostNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String postNotFoundExceptionHandler(PostNotFoundException e) {
         return e.getMessage();
     }
+
 }

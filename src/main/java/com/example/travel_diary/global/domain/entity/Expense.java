@@ -28,8 +28,6 @@ public class Expense {
     @Column(name = "EXPENSE_ID")
     private Long id;
 // 타이틀
-
-
     @Column( name = "DATE")
     @Setter
     private LocalDate date;
@@ -46,6 +44,5 @@ public class Expense {
     private List<ExpenseDetail> expenseDetails;
     //set 지우고 /
     // enum scope
-
 
 }

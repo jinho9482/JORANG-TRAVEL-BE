@@ -6,7 +6,6 @@ import com.example.travel_diary.global.domain.entity.Photo;
 import com.example.travel_diary.global.domain.repository.PhotoRepository;
 import com.example.travel_diary.global.exception.PhotoLimitExceededException;
 import com.example.travel_diary.global.exception.PhotoNotFoundException;
-import com.example.travel_diary.global.request.PhotoRequestDto;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
@@ -18,9 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Service

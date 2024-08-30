@@ -22,6 +22,7 @@ public record ExpenseRequestDto (
 
         return Expense.builder()
                 .date(date)
+                .post(post)
                 .build();
 
     }

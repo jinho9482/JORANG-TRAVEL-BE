@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/posts")
@@ -43,16 +44,16 @@ public class PostController {
         return postService.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/public/{id}")
     public Post getById(@PathVariable(name = "id") Long id) {
         return postService.getById(id);
     }
+
 
     @GetMapping("/my/{id}")
     public Post getMyPostById(@AuthenticationPrincipal User user, @PathVariable(name = "id") Long id) {
         return postService.getMyPostById(user, id);
     }
-
     @GetMapping("/recent")
     public List<Post> getRecentPostsFirst() {
         return postService.getRecentPostsFirst();
@@ -98,4 +99,15 @@ public class PostController {
     public List<Post> getUnpublishedPosts() {
         return postService.getUnpublishedPosts();
     }
+
+//    @GetMapping("/my/countries")
+//    public Set<String> getCountriesFromMyPosts(@AuthenticationPrincipal User user) {
+//        return postService.getCountriesFromMyPosts(user);
+//    }
+    @GetMapping("/my")
+    public List<Post> getMyPosts(@AuthenticationPrincipal User user) {
+        return postService.getMyPosts(user);
+    }
+
+
 }

@@ -59,10 +59,7 @@ public class DiaryServiceImpl implements DiaryService {
             diary.setDate(el.date());
             diary.setCreatedAt(LocalDateTime.now());
         });
-
     }
-
-
 }
 
 

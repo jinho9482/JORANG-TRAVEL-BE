@@ -43,8 +43,8 @@ public class DiaryController {
     };
 
 //    @GetMapping("/mypage")
-//    public List<String> getDiaryByUserAndCountry(@AuthenticationPrincipal User user) {
-//        return diaryService.getDiaryByUserAndCountry(user);
-//    }
+////    public List<String> getDiaryByUserAndCountry(@AuthenticationPrincipal User user) {
+////        return diaryService.getDiaryByUserAndCountry(user);
+////    }
 
 }
