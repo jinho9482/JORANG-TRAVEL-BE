@@ -41,18 +41,9 @@ public class Diary {
     @Setter
     private LocalDate date;
 
-    @Column(name = "SCOPE")
-    @Setter
-    @Enumerated(EnumType.STRING)
-    private Scope scope;
-
     @Column(name = "CREATED_AT")
     @Setter
     private LocalDateTime createdAt;
-
-    @Column(name = "COUNTRY")
-    @Setter
-    private String country;
 
     @JsonBackReference
     @JoinColumn(name = "POST_ID")

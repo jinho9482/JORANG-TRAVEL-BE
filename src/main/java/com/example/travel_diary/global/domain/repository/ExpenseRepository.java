@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
-
     List<Expense> findAllByPost_Id(Long postId);
-
 }
+

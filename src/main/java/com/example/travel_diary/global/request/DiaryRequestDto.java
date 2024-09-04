@@ -8,11 +8,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record DiaryRequestDto(
+        Long id,
         String title,
         String content,
-        LocalDate date,
-        Scope scope,
-        String country
+        LocalDate date
         ) {
     // update만 쓰기 때문에 필요 없다.
 //        public Diary toEntity(Post post, DiaryRequestDto req) {

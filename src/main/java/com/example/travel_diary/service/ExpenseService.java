@@ -8,7 +8,7 @@ import com.example.travel_diary.global.response.ExpenseResponseDto;
 import java.util.List;
 
 public interface ExpenseService {
-    void saveExpense(ExpenseRequestDto expenseRequestDto);
+    long saveExpense(Long postId,ExpenseRequestDto expenseRequestDto);
     Expense updateExpense(Long id,ExpenseRequestDto expenseRequestDto);
     List<Expense> getAllByPostId(Long id);
     ExpenseResponseDto getExpenseById(Long id);
@@ -19,4 +19,3 @@ public interface ExpenseService {
 
 
 }
-

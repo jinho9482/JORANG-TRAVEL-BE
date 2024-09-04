@@ -20,12 +20,15 @@ import java.util.List;
 public class ExpenseDetailController {
     private final ExpenseDetailService expenseDetailService;
 
-    @PostMapping
+    @PostMapping("expenses/{expenseId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveExpenseDetailbyExpenseId( @RequestBody ExpenseDetailRequestDto requestDto) {
+    public void saveExpenseDetailbyExpenseId( @PathVariable("expenseId") Long expenseId ,@RequestBody List<ExpenseDetailRequestDto> requestDto) {
 
-        expenseDetailService.saveExpenseDetailbyExpenseId(requestDto);
+        expenseDetailService.saveExpenseDetailbyExpenseId(expenseId ,requestDto);
+
     }
+
+
 //("/expenses/{expenseId}")
     @PutMapping("/{id}")
     public void updateExpenseDetail(@PathVariable(name = "id") Long id, @RequestBody ExpenseDetailRequestDto requestDto) {
@@ -35,10 +38,7 @@ public class ExpenseDetailController {
 //public List<ExpenseDetail> getAllbyExpenseId(@PathVariable Long expenseId) {}
 
     @GetMapping("/{id}")
-
     public ExpenseDetailResponseDto getExpenseDetailById(@PathVariable (name = "id")Long id) {
-
-   
         return expenseDetailService.getExpenseDetailById(id);
     }
 
@@ -47,14 +47,30 @@ public class ExpenseDetailController {
         expenseDetailService.deleteExpenseDetailById(id);
     }
 
-    @GetMapping("/mypage")
-    public List<ExpenseDetailByUserAndCountryResponseDto> getExpenseDetailByUserAndCountry(@AuthenticationPrincipal User user) {
-        return expenseDetailService.getExpenseDetailByUserAndCountry(user);
+//    @GetMapping("/mypage")
+//    public List<ExpenseDetailByUserAndCountryResponseDto> getExpenseDetailByUserAndCountry(@AuthenticationPrincipal User user) {
+//        return expenseDetailService.getExpenseDetailByUserAndCountry(user);
+//    }
+
+
+    @GetMapping("/by-post/{postId}")
+    public List<ExpenseDetailResponseDto> getExpenseDetailsByPostId(@PathVariable (name="postId") Long postId) {
+        return expenseDetailService.getExpenseDetailsByPostId(postId);
     }
 
-    @GetMapping("/postId/{postId}/chart")
+
+//@GetMapping("/by-post/{postId}")
+//public List<ExpenseDetailResponseDto> getExpenseDetailsByPostId(@PathVariable(name = "postId") Long postId) {
+//    // postId에 해당하는 모든 ExpenseDetails를 가져오는 구현
+//    return expenseDetailServive.getExpenseDetailsByPostId(postId);
+//}
+//@GetMapping("/by-post/{postId}")
+//public List<ExpenseDetailResponseDto> getExpenseDetailsByPostId(@PathVariable Long postId) {
+//    return expenseDetailService.getExpenseDetailsByPostId(postId);
+    @GetMapping("/chart/postId/{postId}")
     public List<ExpenseDetailChartResponseDto> getExpenseDetailChart(@PathVariable("postId") Long postId) {
         return expenseDetailService.getExpenseDetailChart(postId);
     }
 }
+
 

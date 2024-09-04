@@ -10,9 +10,9 @@ public interface DiaryService {
     Long createDiary(Long postId);
     Diary getById(Long id);
     List<Diary> getAllByPostId(Long postId);
-    void updateDiary(Long id, DiaryRequestDto req);
     void deleteDiaryById(Long id);
-    List<String>getDiaryByUserAndCountry(User user);
+    void updateDiary(List<DiaryRequestDto> req);
+//    List<String> getDiaryByUserAndCountry(User user);
 
 //    String summarizeByPostId(Long postId);
 //

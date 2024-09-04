@@ -2,6 +2,7 @@ package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Post;
 import com.example.travel_diary.global.domain.entity.User;
+import com.example.travel_diary.global.request.PostRequestDto;
 import com.example.travel_diary.service.PostService;
 import com.example.travel_diary.service.PostServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/posts")
@@ -33,20 +35,25 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable(name = "id") Long id, @RequestBody String title) {
-        postService.update(id, title);
+    public void update(@PathVariable(name = "id") Long id, @RequestBody PostRequestDto req) {
+        postService.update(id, req);
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Post> getAll() {
         return postService.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/public/{id}")
     public Post getById(@PathVariable(name = "id") Long id) {
         return postService.getById(id);
     }
 
+
+    @GetMapping("/my/{id}")
+    public Post getMyPostById(@AuthenticationPrincipal User user, @PathVariable(name = "id") Long id) {
+        return postService.getMyPostById(user, id);
+    }
     @GetMapping("/recent")
     public List<Post> getRecentPostsFirst() {
         return postService.getRecentPostsFirst();
@@ -87,4 +94,20 @@ public class PostController {
     public Page<Post> list(@AuthenticationPrincipal User user, @RequestParam(value="page", defaultValue="0") int page) {
         return this.postService.getList(user, page);
     }
+
+    @GetMapping("/unpublished")
+    public List<Post> getUnpublishedPosts() {
+        return postService.getUnpublishedPosts();
+    }
+
+//    @GetMapping("/my/countries")
+//    public Set<String> getCountriesFromMyPosts(@AuthenticationPrincipal User user) {
+//        return postService.getCountriesFromMyPosts(user);
+//    }
+    @GetMapping("/my")
+    public List<Post> getMyPosts(@AuthenticationPrincipal User user) {
+        return postService.getMyPosts(user);
+    }
+
+
 }

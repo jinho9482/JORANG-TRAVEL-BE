@@ -7,14 +7,10 @@ import com.example.travel_diary.global.domain.repository.LikeRepository;
 import com.example.travel_diary.global.response.LikeResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -64,20 +60,6 @@ public class LikeServiceImpl implements LikeService {
     public Boolean checkLike(User user, long postId) {
         Optional<Like> like = likeRepository.findByUser_IdAndPost_Id(user.getId(), postId);
         return like.isPresent();
-    }
-
-    @Override
-    public Page<LikeResponse> getList(User user, int page) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        Page<Like> allByUser = likeRepository.findAllByUser(user, pageable);
-        List<LikeResponse> likeResponses = allByUser.stream()
-                .map(LikeResponse::from)
-                .toList();
-
-        // PageImpl을 사용하여 Page<LikeResponse> 생성
-        return new PageImpl<>(likeResponses, pageable, allByUser.getTotalElements());
     }
 
 
