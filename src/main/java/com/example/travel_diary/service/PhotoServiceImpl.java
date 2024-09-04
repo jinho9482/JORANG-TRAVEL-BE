@@ -11,7 +11,7 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,13 +20,23 @@ import java.io.InputStream;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
     private final DiaryService diaryService;
-    private final String bucketName = "jorang";
-    private final Storage storage =  StorageOptions.newBuilder().setProjectId("titanium-vision-424101-s9").build().getService();
+    private final String GCP_PROJECT_ID;
+    private final String BUCKET_NAME;
+    private final Storage storage;
 
+    public PhotoServiceImpl(PhotoRepository photoRepository,
+                            DiaryService diaryService,
+                            @Value("${gcp.project.id}") String GCP_PROJECT_ID,
+                            @Value("${gcp.project.storage.bucket}") String BUCKET_NAME) {
+        this.photoRepository = photoRepository;
+        this.diaryService = diaryService;
+        this.GCP_PROJECT_ID = GCP_PROJECT_ID;
+        this.BUCKET_NAME = BUCKET_NAME;
+        this.storage = StorageOptions.newBuilder().setProjectId(GCP_PROJECT_ID).build().getService();
+    }
     @Override
     @Transactional
     public void insert(Long diaryId, MultipartFile[] files) throws IOException {
@@ -37,7 +47,7 @@ public class PhotoServiceImpl implements PhotoService {
         for (int i = 0; i < files.length; i++) {
             MultipartFile file = files[i];
             String storagePath = "posts/" + diary.getPost().getId() + "/diaries/" + diaryId + "/images/" + (i+1+photos.size());
-            BlobId blobId = BlobId.of(bucketName, storagePath);
+            BlobId blobId = BlobId.of(BUCKET_NAME, storagePath);
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
             try {
 //                    storage.createFrom(blobInfo, Paths.get(el.paths()[i]));
@@ -66,7 +76,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Transactional
     public void update(Long id, MultipartFile file) throws IOException {
         Photo photo = photoRepository.findById(id).orElseThrow(PhotoNotFoundException::new);
-        BlobId blobId = BlobId.of(bucketName, photo.getStoragePath());
+        BlobId blobId = BlobId.of(BUCKET_NAME, photo.getStoragePath());
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
         try {
             InputStream inputStream = file.getInputStream();
@@ -82,7 +92,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Transactional
     public void deleteById(Long id) {
         Photo photo = photoRepository.findById(id).orElseThrow(PhotoNotFoundException::new);
-        BlobId blobId = BlobId.of(bucketName, photo.getStoragePath());
+        BlobId blobId = BlobId.of(BUCKET_NAME, photo.getStoragePath());
         storage.delete(blobId);
         photoRepository.deleteById(id);
     }

@@ -33,4 +33,10 @@ mail:
 
 jwt:
   secret: asdfaasdpvhiashpdiorj490u2903412931avuyhguykg
-  expiration: 6000000 # 100 minutes
+  expiration: 60000000 # 100 minutes
+
+gcp:
+  project:
+    id: upheld-arena-405905
+    storage:
+      bucket: jorang
