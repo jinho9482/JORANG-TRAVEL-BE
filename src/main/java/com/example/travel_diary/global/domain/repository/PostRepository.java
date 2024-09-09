@@ -16,54 +16,21 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByScope(Scope scope);
+    List<Post> findAllByScopeAndIsPublished(Scope scope, boolean isPublished);
 
-    @Query("SELECT p " +
-            "FROM Post p " +
-            "JOIN FETCH p.diaries d " +
-            "WHERE p.scope = :scope " +
-            "ORDER BY p.createdAt DESC")
-    List<Post> findAllByDiaries_ScopeOrderByCreatedAtDesc(@Param("scope") Scope scope);
-
-    @Query("SELECT p " +
-            "FROM Post p " +
-            "JOIN FETCH p.diaries d " +
-            "WHERE p.scope = :scope " +
-            "AND p.country = :country " +
-            "ORDER BY p.createdAt DESC " +
-            "LIMIT 5")
-    List<Post> findTop5ByDiaries_ScopeAndDiaries_CountryOrderByCreatedAtDesc(@Param("scope") Scope scope,
-                                                                             @Param("country") String country);
-
-
-    @Query("SELECT p " +
-            "FROM Post p " +
-            "JOIN FETCH p.diaries d " +
-            "WHERE p.scope = :scope " +
-            "AND p.country = :country " +
-            "ORDER BY p.createdAt DESC")
-    List<Post> findAllByDiaries_ScopeAndDiaries_CountryOrderByCreatedAtDesc(@Param("scope") Scope scope,
-                                                                            @Param("country")String country);
-    @Query("SELECT p " +
-            "FROM Post p " +
-            "JOIN FETCH p.diaries d " +
-            "WHERE p.scope = :scope " +
-            "AND p.createdAt BETWEEN :startOfWeek AND :endOfWeek " +
-//            "GROUP BY p.id " +
-            "ORDER BY p.love DESC " +
-            "LIMIT 5")
-    List<Post> findTop5ByDiaries_ScopeAndCreatedAtBetweenOrderByLoveDesc(@Param("scope") Scope scope,
-                                                                         @Param("startOfWeek") LocalDateTime startOfWeek,
-                                                                         @Param("endOfWeek") LocalDateTime endOfWeek);
-    List<Post> findAllByScopeAndDiaries_DateBetweenOrderByCreatedAtDesc(Scope scope, LocalDate from, LocalDate to);
-
+    List<Post> findAllByIsPublishedAndUserOrderByCreatedAtDesc(boolean isPublished, User user);
+    List<Post> findAllByScopeAndIsPublishedOrderByCreatedAtDesc(Scope scope, boolean isPublished);
+    List<Post> findTop5ByScopeAndCountryAndIsPublishedOrderByCreatedAtDesc(Scope scope, String country, boolean isPublished);
+    List<Post> findAllByScopeAndCountryAndIsPublishedOrderByCreatedAtDesc(Scope scope, String country, boolean isPublished);
+    List<Post> findTop5ByScopeAndIsPublishedAndCreatedAtBetweenOrderByLoveDesc(Scope scope, boolean isPublished, LocalDateTime startOfWeek, LocalDateTime endOfWeek);
+    List<Post> findAllByScopeAndIsPublishedAndCreatedAtBetweenOrderByCreatedAtDesc(Scope scope, boolean isPublished, LocalDate from, LocalDate to);
+    List<Post> findTop5ByScopeAndIsPublishedOrderByCreatedAtDesc(Scope scope, boolean isPublished);
     List<Post> findAllByUserOrderByCreatedAtDesc(User user);
-
-    Page<Post> findAllByUser(User user, Pageable pageable);
-
-
-    List<Post> findTop5ByScopeOrderByCreatedAtDesc(Scope scope);
-
-
+    Page<Post> findAllByIsPublishedAndUser(boolean isPublished, User user, Pageable pageable);
+    List<Post> findAllByUser(User user);
+    List<Post> findAllByIsPublishedOrderByCreatedAtDesc(boolean isPublished);
+    @Query("SELECT country FROM Post WHERE user = :user GROUP BY country")
+    List<String> findMyCountry(@Param("user") User user);
 }
 
 

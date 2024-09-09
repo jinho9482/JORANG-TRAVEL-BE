@@ -4,10 +4,8 @@ import com.example.travel_diary.global.domain.entity.Expense;
 import com.example.travel_diary.global.domain.entity.Post;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
-public record ExpenseRequestDto (
+public record ExpenseRequest(
     LocalDate date
 
 //    Long postId

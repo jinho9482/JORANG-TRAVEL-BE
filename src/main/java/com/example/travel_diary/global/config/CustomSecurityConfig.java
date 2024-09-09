@@ -54,7 +54,7 @@ public class CustomSecurityConfig {
                                 "/api/v1/auths/findLoginId",
                                 "/api/v1/auths/findPassword",
                                 "/api/v1/posts/public/**",
-                                "/api/v1/expenseDetail/chart/postId/**",
+                                "/api/v1/expense-details/chart/postId/**",
                                 "/api/v1/diaries/posts/**",
                                 "/api/v1/likes/posts/**",
                                 "/api/v1/posts/recent/diaries",

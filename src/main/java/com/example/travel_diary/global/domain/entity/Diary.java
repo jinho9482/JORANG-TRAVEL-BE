@@ -51,6 +51,7 @@ public class Diary {
     private Post post;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "diary")
+    // cascade 삭제 -> gcp 에 있는 photo도 같이 삭제하기 위해 (기존에는 db상 photo만 삭제됨)
     private List<Photo> photos;
 }

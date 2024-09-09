@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record SignUpRequestDto(
+public record SignUpRequest(
         String loginId, String name, String nickname, String password, LocalDate dateOfBirth, String email
 ) {
     public User toEntity(String encodedPassword) {

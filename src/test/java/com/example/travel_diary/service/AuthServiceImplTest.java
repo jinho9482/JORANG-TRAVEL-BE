@@ -6,12 +6,10 @@ import com.example.travel_diary.global.exception.EmailAlreadyExistsException;
 import com.example.travel_diary.global.exception.LoginFailedException;
 import com.example.travel_diary.global.exception.LoginIdAlreadyExistsException;
 import com.example.travel_diary.global.exception.UserNotFoundException;
-import com.example.travel_diary.global.request.FindLoginIdRequestDto;
-import com.example.travel_diary.global.request.SignInRequestDto;
-import com.example.travel_diary.global.request.SignUpRequestDto;
+import com.example.travel_diary.global.request.SignInRequest;
+import com.example.travel_diary.global.request.SignUpRequest;
 import com.example.travel_diary.global.response.GetUserByIdResponseDto;
 import com.example.travel_diary.global.response.LoginInResponseDto;
-import com.example.travel_diary.global.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,10 +63,10 @@ class AuthServiceImplTest {
     @Test
     void signUp_Success() throws Exception {
         //given
-        SignUpRequestDto signUpRequestDto = new SignUpRequestDto("testLoginId2", "testName2", "testNickname2", "testPassword2", LocalDate.now(), "testEmail2");
+        SignUpRequest signUpRequest = new SignUpRequest("testLoginId2", "testName2", "testNickname2", "testPassword2", LocalDate.now(), "testEmail2");
 
         //when
-        UUID uuid = authService.signUp(signUpRequestDto);
+        UUID uuid = authService.signUp(signUpRequest);
 
         // then
         Optional<User> byId = userRepository.findById(uuid);
@@ -82,29 +80,29 @@ class AuthServiceImplTest {
     @Test
     void signUp_LoginIdAlreadyExists() {
         //given
-        SignUpRequestDto signUpRequestDto = new SignUpRequestDto("testLoginId", "testName2", "testNickname2", "testPassword2", LocalDate.now(), "testEmail2");
+        SignUpRequest signUpRequest = new SignUpRequest("testLoginId", "testName2", "testNickname2", "testPassword2", LocalDate.now(), "testEmail2");
 
         //when & then
         assertThrows(LoginIdAlreadyExistsException.class, () -> {
-            authService.signUp(signUpRequestDto);
+            authService.signUp(signUpRequest);
         });
     }
 
     @Test
     void signUp_EmailAlreadyExists() {
         //given
-        SignUpRequestDto signUpRequestDto = new SignUpRequestDto("testLoginId2", "testName2", "testNickname2", "testPassword2", LocalDate.now(), "testEmail");
+        SignUpRequest signUpRequest = new SignUpRequest("testLoginId2", "testName2", "testNickname2", "testPassword2", LocalDate.now(), "testEmail");
 
         //when & then
         assertThrows(EmailAlreadyExistsException.class, () -> {
-            authService.signUp(signUpRequestDto);
+            authService.signUp(signUpRequest);
         });
     }
 
     @Test
     void signIn_Success() throws Exception {
-        SignInRequestDto signInRequestDto = new SignInRequestDto("testLoginId", "testPassword");
-        LoginInResponseDto responseDto = authService.signIn(signInRequestDto);
+        SignInRequest signInRequest = new SignInRequest("testLoginId", "testPassword");
+        LoginInResponseDto responseDto = authService.signIn(signInRequest);
         assertEquals(user.getId(), responseDto.loginId());
         assertEquals(user.getNickname(), responseDto.nickname());
         assertNotNull(responseDto.token());
@@ -112,17 +110,17 @@ class AuthServiceImplTest {
 
     @Test
     void signIn_UserNotFound() {
-        SignInRequestDto signInRequestDto = new SignInRequestDto("testLoginId3", "testPassword");
+        SignInRequest signInRequest = new SignInRequest("testLoginId3", "testPassword");
         assertThrows(UserNotFoundException.class, () -> {
-            authService.signIn(signInRequestDto);
+            authService.signIn(signInRequest);
         });
     }
 
     @Test
     void signIn_InvalidPassword() {
-        SignInRequestDto signInRequestDto = new SignInRequestDto("testLoginId", "testPassword3");
+        SignInRequest signInRequest = new SignInRequest("testLoginId", "testPassword3");
         assertThrows(LoginFailedException.class, () -> {
-            authService.signIn(signInRequestDto);
+            authService.signIn(signInRequest);
         });
     }
 

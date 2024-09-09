@@ -5,7 +5,7 @@ import com.example.travel_diary.global.domain.entity.ExpenseDetail;
 import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.domain.repository.ExpenseDetailRepository;
 import com.example.travel_diary.global.domain.repository.ExpenseRepository;
-import com.example.travel_diary.global.request.ExpenseDetailRequestDto;
+import com.example.travel_diary.global.request.ExpenseDetailRequest;
 import com.example.travel_diary.global.response.ExpenseDetailByUserAndCountryResponseDto;
 import com.example.travel_diary.global.response.ExpenseDetailChartResponseDto;
 import com.example.travel_diary.global.response.ExpenseDetailChartTempResponseDto;
@@ -27,7 +27,7 @@ public class ExpenseDetailServiceImpl implements ExpenseDetailService {
 
     @Transactional
     @Override
-    public void saveExpenseDetailbyExpenseId(Long expenseId, List<ExpenseDetailRequestDto> requestDto) {
+    public void saveExpenseDetailByExpenseId(Long expenseId, List<ExpenseDetailRequest> requestDto) {
         Expense expense = expenseRepository.findById(expenseId).orElseThrow(EntityNotFoundException::new);
         List<ExpenseDetail> expenseDetails = requestDto.stream()
                 .map(dto -> dto.toEntity(expense))  // Expense 객체를 포함하여 Entity 생성
@@ -51,7 +51,7 @@ public class ExpenseDetailServiceImpl implements ExpenseDetailService {
 
     @Transactional
     @Override
-    public void updateExpenseDetail(Long id, ExpenseDetailRequestDto requestDto) {
+    public void updateExpenseDetail(Long id, ExpenseDetailRequest requestDto) {
         ExpenseDetail expenseDetail = expenseDetailRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         expenseDetail.setCost(requestDto.cost());

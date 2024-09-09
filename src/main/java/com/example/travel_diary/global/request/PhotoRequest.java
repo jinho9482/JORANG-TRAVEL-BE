@@ -1,10 +1,10 @@
 package com.example.travel_diary.global.request;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
-public record PhotoRequestDto(
+public record PhotoRequest(
+        Long postId,
         Long diaryId,
         MultipartFile[] files
 ) {

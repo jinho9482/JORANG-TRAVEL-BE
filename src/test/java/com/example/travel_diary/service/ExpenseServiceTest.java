@@ -3,8 +3,6 @@ package com.example.travel_diary.service;
 import com.example.travel_diary.global.domain.entity.Expense;
 import com.example.travel_diary.global.domain.repository.ExpenseRepository;
 import com.example.travel_diary.global.domain.repository.PostRepository;
-import com.example.travel_diary.global.request.ExpenseRequestDto;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
