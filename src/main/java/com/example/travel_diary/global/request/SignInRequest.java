@@ -1,6 +1,6 @@
 package com.example.travel_diary.global.request;
 
-public record SignInRequestDto(
+public record SignInRequest(
         String loginId, String password
 ) {
 

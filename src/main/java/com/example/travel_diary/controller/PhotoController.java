@@ -1,32 +1,38 @@
 package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Photo;
-import com.example.travel_diary.global.request.PhotoRequestDto;
 
+import com.example.travel_diary.global.request.PhotoRequest;
 import com.example.travel_diary.service.PhotoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/photos")
 @RequiredArgsConstructor
+@Slf4j
 public class PhotoController {
     private final PhotoService photoService;
 
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void insert(@RequestParam(name = "diaryId") Long diaryId, @RequestParam(name = "file") MultipartFile[] files) throws IOException {
-        System.out.println(diaryId);
-        for (MultipartFile file : files) System.out.println(file);
-        photoService.insert(diaryId, files);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void insert(@RequestParam(name = "diaryId") Long diaryId, @RequestParam(name = "file") MultipartFile[] files) throws IOException {
+//        System.out.println(diaryId);
+//        for (MultipartFile file : files) System.out.println(file);
+//        photoService.insert(diaryId, files);
+//    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void insert(PhotoRequest req) throws IOException {
+//        log.info(req.toString());
+//        photoService.insert(req);
+//    }
 
     @GetMapping("/{id}")
     public Photo getById(@PathVariable(name = "id") Long id) {
@@ -38,13 +44,20 @@ public class PhotoController {
         return photoService.getByDiaryId(diaryId);
     }
 
-    @PutMapping
-    public void update(@RequestParam(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) throws IOException {
-        photoService.update(id, file);
+//    @PutMapping
+//    public void update(@RequestParam(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) throws IOException {
+//        photoService.update(id, file);
+//    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void savePhotos(PhotoRequest req) throws IOException {
+        log.info(req.toString());
+        photoService.savePhotos(req);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable(name = "id") Long id) {
-        photoService.deleteById(id);
+    @DeleteMapping("/{diaryId}")
+    public void deletePhotosByDiaryId(@PathVariable(name = "diaryId") Long diaryId) throws IOException {
+        photoService.deletePhotosByDiaryId(diaryId);
     }
 }

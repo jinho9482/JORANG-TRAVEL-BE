@@ -1,6 +1,6 @@
 package com.example.travel_diary.global.request;
 
-public record FindLoginIdRequestDto(
+public record FindLoginIdRequest(
         String name, String email
 ) {
 }

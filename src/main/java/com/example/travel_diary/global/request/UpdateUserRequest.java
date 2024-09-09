@@ -1,4 +1,4 @@
 package com.example.travel_diary.global.request;
 
-public record UpdateUserRequestDto(String value) {
+public record UpdateUserRequest(String value) {
 }

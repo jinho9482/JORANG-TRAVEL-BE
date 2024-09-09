@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
     List<Photo> findAllByDiary_Id(Long diaryId);
+    void deleteAllByDiary_Id(Long diaryId);
 }

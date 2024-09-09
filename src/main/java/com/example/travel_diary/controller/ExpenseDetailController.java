@@ -1,15 +1,11 @@
 package com.example.travel_diary.controller;
 
-import com.example.travel_diary.global.domain.entity.User;
-import com.example.travel_diary.global.domain.entity.ExpenseDetail;
-import com.example.travel_diary.global.request.ExpenseDetailRequestDto;
-import com.example.travel_diary.global.response.ExpenseDetailByUserAndCountryResponseDto;
+import com.example.travel_diary.global.request.ExpenseDetailRequest;
 import com.example.travel_diary.global.response.ExpenseDetailChartResponseDto;
 import com.example.travel_diary.global.response.ExpenseDetailResponseDto;
 import com.example.travel_diary.service.ExpenseDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,16 +18,16 @@ public class ExpenseDetailController {
 
     @PostMapping("expenses/{expenseId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveExpenseDetailbyExpenseId( @PathVariable("expenseId") Long expenseId ,@RequestBody List<ExpenseDetailRequestDto> requestDto) {
+    public void saveExpenseDetailByExpenseId( @PathVariable("expenseId") Long expenseId ,@RequestBody List<ExpenseDetailRequest> requestDto) {
 
-        expenseDetailService.saveExpenseDetailbyExpenseId(expenseId ,requestDto);
+        expenseDetailService.saveExpenseDetailByExpenseId(expenseId ,requestDto);
 
     }
 
 
 //("/expenses/{expenseId}")
     @PutMapping("/{id}")
-    public void updateExpenseDetail(@PathVariable(name = "id") Long id, @RequestBody ExpenseDetailRequestDto requestDto) {
+    public void updateExpenseDetail(@PathVariable(name = "id") Long id, @RequestBody ExpenseDetailRequest requestDto) {
         expenseDetailService.updateExpenseDetail(id, requestDto);
     }
 //@GetMapping("/{expenseId")

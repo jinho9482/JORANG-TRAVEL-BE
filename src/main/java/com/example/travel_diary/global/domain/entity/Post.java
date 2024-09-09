@@ -28,7 +28,8 @@ public class Post {
 
     @Column(name = "CREATED_AT")
     @Setter
-    private LocalDateTime createdAt;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "LOVE")
     @Setter
@@ -44,14 +45,15 @@ public class Post {
 
     @Column(name = "IS_PUBLISHED")
     @Setter
-    private boolean isPublished;
+    @Builder.Default
+    private boolean isPublished = false;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like> likes;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post")
     private List<Diary> diaries;
 
     @JsonManagedReference

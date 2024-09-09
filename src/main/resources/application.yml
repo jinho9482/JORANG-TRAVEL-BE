@@ -9,6 +9,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 #  data:
 #    elasticsearch:
 #      repositories:
@@ -33,7 +36,7 @@ mail:
 
 jwt:
   secret: asdfaasdpvhiashpdiorj490u2903412931avuyhguykg
-  expiration: 60000000 # 100 minutes
+  expiration: 60000000 # 1000 minutes
 
 gcp:
   project:

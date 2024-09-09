@@ -1,8 +1,9 @@
 package com.example.travel_diary.global.response;
 
+import java.util.Date;
 import java.util.UUID;
 
 public record LoginInResponseDto(
-        String token, UUID loginId, String nickname
+        String token, UUID loginId, String nickname, Date expirationTime
 ) {
 }

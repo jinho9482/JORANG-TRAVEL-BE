@@ -1,7 +1,7 @@
 package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Expense;
-import com.example.travel_diary.global.request.ExpenseRequestDto;
+import com.example.travel_diary.global.request.ExpenseRequest;
 import com.example.travel_diary.global.response.ExpenseResponseDto;
 import com.example.travel_diary.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +18,14 @@ public class ExpenseController {
 
     @PostMapping("/posts/{postId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public long save(@PathVariable(name = "postId") Long postId,@RequestBody ExpenseRequestDto expenseRequestDto) {
-        return expenseService.saveExpense(postId,expenseRequestDto);
+    public long save(@PathVariable(name = "postId") Long postId,@RequestBody ExpenseRequest expenseRequest) {
+        return expenseService.saveExpense(postId, expenseRequest);
     }
 
 
 
     @PutMapping("/update/{id}")
-    public Expense update(@PathVariable(name = "id") Long id, @RequestBody ExpenseRequestDto req) {
+    public Expense update(@PathVariable(name = "id") Long id, @RequestBody ExpenseRequest req) {
         return expenseService.updateExpense(id, req);
 
 

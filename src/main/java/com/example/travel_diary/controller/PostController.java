@@ -2,10 +2,11 @@ package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Post;
 import com.example.travel_diary.global.domain.entity.User;
-import com.example.travel_diary.global.request.PostRequestDto;
+import com.example.travel_diary.global.request.PostRequest;
+import com.example.travel_diary.global.request.PostTempRequest;
 import com.example.travel_diary.service.PostService;
-import com.example.travel_diary.service.PostServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,21 +14,39 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/posts")
 @RequiredArgsConstructor
+@Slf4j
 public class PostController {
     private final PostService postService;
+
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+////    @RolesAllowed("USER")
+//    public Long createPost(@AuthenticationPrincipal User user) {
+//        return postService.createPost(user);
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 //    @RolesAllowed("USER")
-    public Long createPost(@AuthenticationPrincipal User user) {
-        return postService.createPost(user);
+    public Long createPost(@AuthenticationPrincipal User user, @RequestBody PostRequest req) {
+        return postService.createPost(user, req);
     }
 
+    @PostMapping("/temp")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Long createTemporaryPost(@AuthenticationPrincipal User user, @RequestBody PostTempRequest req) {
+        return postService.createTemporaryPost(user, req);
+    }
+
+    @PutMapping("/{id}/temp")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateTemporaryPost(@PathVariable(name = "id") Long id, @RequestBody PostTempRequest req) {
+        postService.updateTemporaryPost(id, req);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable(name = "id") Long id) {
@@ -35,7 +54,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable(name = "id") Long id, @RequestBody PostRequestDto req) {
+    public void update(@PathVariable(name = "id") Long id, @RequestBody PostRequest req) {
         postService.update(id, req);
     }
 
@@ -87,20 +106,32 @@ public class PostController {
 
     @GetMapping("/user")
     public List<Post> getAllByUser(@AuthenticationPrincipal User user) {
+        log.info("got into getAllByUser in controller");
         return postService.getAllByUser(user);
     }
 
-    @GetMapping("/user/list")
-    public Page<Post> list(@AuthenticationPrincipal User user, @RequestParam(value="page", defaultValue="0") int page) {
-        return this.postService.getList(user, page);
+    @GetMapping("/my-published/page")
+    public Page<Post> getMyPublishedPostsPerPage(@AuthenticationPrincipal User user, @RequestParam(value="page", defaultValue="0") int page) {
+        return postService.getMyPublishedPostsPerPage(user, page);
     }
 
-    @GetMapping("/unpublished")
-    public List<Post> getUnpublishedPosts() {
-        return postService.getUnpublishedPosts();
+    @GetMapping("/my-unpublished")
+    public List<Post> getUnpublishedPosts(@AuthenticationPrincipal User user) {
+        return postService.getUnpublishedPosts(user);
     }
 
-//    @GetMapping("/my/countries")
+    @GetMapping("/my-unpublished/page")
+    public Page<Post> getUnpublishedPostsPerPage(@AuthenticationPrincipal User user, @RequestParam(value="page", defaultValue="0") int page) {
+        return postService.getUnpublishedPostsPerPage(user, page);
+    }
+
+
+    @GetMapping("/my-published")
+    public List<Post> getPublishedPosts(@AuthenticationPrincipal User user) {
+        return postService.getPublishedPosts(user);
+    }
+
+    //    @GetMapping("/my/countries")
 //    public Set<String> getCountriesFromMyPosts(@AuthenticationPrincipal User user) {
 //        return postService.getCountriesFromMyPosts(user);
 //    }
@@ -109,5 +140,9 @@ public class PostController {
         return postService.getMyPosts(user);
     }
 
+    @GetMapping("/my-countries")
+    public List<String> getNumberOfCountriesVisited(@AuthenticationPrincipal User user) {
+        return postService.getNumberOfCountriesVisited(user);
+    }
 
 }
