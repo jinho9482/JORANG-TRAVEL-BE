@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: travel-diary
+  datasource:
+    url: jdbc:mysql://mysql:3306/jorang?characterEncoding=UTF-8&serverTimezone=Asia/Seoul # localhost? ??? kube?? service??? ?? ??
+    username: {DB_USER} # {DB_USER} -> ??? ?? ??? ?? ??
+    password: {DB_PASSWORD} # {DB_PASSWORD} -> ??? ?? ??? ?? ??
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+#  data:
+#    elasticsearch:
+#      repositories:
+#        enabled: true
+#      url: localhost:9200
+  servlet:
+    multipart:
+      maxFileSize: 10MB # 파일 하나의 최대 크기
+      maxRequestSize: 30MB
+
+#  cloud:
+#    gcp:
+#      storage:
+#        credentials:
+#          location: classpath:titanium-vision-424101-s9-cf79898d4168.json
+#        project-id: titanium-vision-424101-s9
+#        bucket: jorang
+
+mail:
+  sender: ksh58997941@gmail.com
+  password: yctq gzba uorl gitm
+
+jwt:
+  secret: asdfaasdpvhiashpdiorj490u2903412931avuyhguykg
+  expiration: 6000000 # 100 minutes
+
+gcp:
+  project:
+    id: upheld-arena-405905
+    storage:
+      bucket: jorang

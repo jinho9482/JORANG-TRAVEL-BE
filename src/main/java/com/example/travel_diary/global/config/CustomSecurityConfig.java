@@ -26,6 +26,7 @@ public class CustomSecurityConfig {
             corsConfiguration.addAllowedHeader("*");
             corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE","OPTIONS"));
             corsConfiguration.setAllowedOrigins(List.of("*"));
+//            corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8000"));
 //            corsConfiguration.setAllowCredentials(true);
             return corsConfiguration;
         }));
@@ -40,10 +41,25 @@ public class CustomSecurityConfig {
         security.authorizeHttpRequests(req ->
                 req.requestMatchers("/api/v1/auths/signUp",
                                 "/api/v1/auths/signIn",
+                                "/api/v1/auths/loginId/**",
+                                "/api/v1/auths/email/**",
                                 "/api/v1/posts/top5/recent",
                                 "/api/v1/posts/top5/like",
                                 "/api/v1/posts/top5/diaries",
-                                "/api/v1/posts/recent")
+                                "/api/v1/posts/recent",
+                                "api/v1/country/**",
+                                "/api/v1/posts/recent",
+                                "/api/v1/posts/recent/diaries",
+                                "/api/v1/country/info/",
+                                "/api/v1/auths/findLoginId",
+                                "/api/v1/auths/findPassword",
+                                "/api/v1/posts/public/**",
+                                "/api/v1/expense-details/chart/postId/**",
+                                "/api/v1/diaries/posts/**",
+                                "/api/v1/likes/posts/**",
+                                "/api/v1/posts/recent/diaries",
+//                                "/api/v1/posts",
+                                "/ela")
                         .permitAll()
                         .anyRequest()
                         .authenticated()

@@ -2,6 +2,7 @@ package com.example.travel_diary.global.response;
 
 import com.example.travel_diary.global.domain.entity.Like;
 import com.example.travel_diary.global.domain.entity.Post;
+import com.google.api.Page;
 
 public record LikeResponse(
         Long id, Post post

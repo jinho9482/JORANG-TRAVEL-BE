@@ -39,15 +39,14 @@ public class JwtUtil {
         } catch (Exception e) {
             throw new IllegalArgumentException("Cannot parse token");
         }
-
     }
 
 
     // Header에서 Token 값 추출
     public String resolveToken(HttpServletRequest request) {
         try {
-            System.out.println("**********************8resolveToken 들어옴");
-            System.out.println(request.getHeader("Authorization"));
+//            System.out.println("************ resolveToken 들어옴 *****************");
+//            System.out.println(request.getHeader("Authorization"));
             return request.getHeader("Authorization");
         } catch (Exception e) {
             throw new IllegalArgumentException("Cannot get token from header");
@@ -60,7 +59,7 @@ public class JwtUtil {
             Claims payload = (Claims) Jwts.parser().verifyWith(secretKey).build().parse(token).getPayload();
             return payload.getExpiration().after(new Date());
         } catch (Exception e) {
-            throw new IllegalArgumentException("Token is not valid");
+            throw new IllegalArgumentException("Token is expired");
         }
 
     }

@@ -4,19 +4,18 @@ import com.example.travel_diary.global.domain.entity.Expense;
 import com.example.travel_diary.global.domain.entity.Post;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
-public record ExpenseRequestDto (
-    LocalDate date,
-    Long postId
-
+public record ExpenseRequest(
+    LocalDate date
 
     ){
-    public Expense toEntity(){
-        Post post = Post.builder().id(this.postId).build();
+    public Expense toEntity(Post post){
+//        Post post = Post.builder().id(this.postId).build();
+
+
+
         return Expense.builder()
-                .date(this.date)
+                .date(date)
                 .post(post)
                 .build();
 

@@ -1,7 +1,9 @@
 package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Like;
+import com.example.travel_diary.global.domain.entity.Post;
 import com.example.travel_diary.global.domain.entity.User;
+import com.example.travel_diary.global.response.LikePageResponse;
 import com.example.travel_diary.global.response.LikeResponse;
 import com.example.travel_diary.service.LikeService;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +22,14 @@ public class LikeController {
 
     @PostMapping("/posts/{postId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public int likeComment(@AuthenticationPrincipal User user, @PathVariable(name = "postId") Long postId) {
+    public int likePost(@AuthenticationPrincipal User user, @PathVariable(name = "postId") Long postId) {
 //        if(user.) throw new IllegalArgumentException("로그인 필요");
-        return likeService.likeComment(user, postId);
+        return likeService.likePost(user, postId);
     }
 
-    @GetMapping("/posts")
-    public List<LikeResponse> getPosts(@AuthenticationPrincipal User user) {
-        return likeService.getPosts(user);
+    @GetMapping("/posts/user")
+    public List<LikeResponse> getLikedPostsByUser(@AuthenticationPrincipal User user) {
+        return likeService.getLikedPostsByUser(user);
     }
 
     @GetMapping("/posts/{postId}/count")
@@ -41,11 +43,8 @@ public class LikeController {
         return likeService.checkLike(user, postId);
     }
 
-    @GetMapping("/user/list")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Page<LikeResponse> list(@AuthenticationPrincipal User user,  @RequestParam(value="page", defaultValue="0") int page) {
-        return likeService.getList(user, page);
+    @GetMapping("/posts/user/page")
+    public LikePageResponse getLikedPostsByUserPerPage(@AuthenticationPrincipal User user, @RequestParam(value="page", defaultValue="0") int page) {
+        return likeService.getLikedPostsByUserPerPage(user, page);
     }
-
-
 }

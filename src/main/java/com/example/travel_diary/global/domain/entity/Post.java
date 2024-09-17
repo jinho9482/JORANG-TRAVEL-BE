@@ -1,5 +1,6 @@
 package com.example.travel_diary.global.domain.entity;
 
+import com.example.travel_diary.global.domain.type.Scope;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -27,22 +28,36 @@ public class Post {
 
     @Column(name = "CREATED_AT")
     @Setter
-    private LocalDateTime createdAt;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "LOVE")
     @Setter
     private int love;
+
+    @Column(name = "COUNTRY")
+    @Setter
+    private String country;
+
+    @Column(name = "SCOPE")
+    @Setter
+    private Scope scope;
+
+    @Column(name = "IS_PUBLISHED")
+    @Setter
+    @Builder.Default
+    private boolean isPublished = false;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like> likes;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post")
     private List<Diary> diaries;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Expense> expenses;
 
     @JsonBackReference

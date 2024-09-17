@@ -4,12 +4,12 @@ import com.example.travel_diary.global.request.*;
 import com.example.travel_diary.global.response.GetUserByIdResponseDto;
 import com.example.travel_diary.global.response.LoginInResponseDto;
 import com.example.travel_diary.service.AuthService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @RestController
@@ -19,14 +19,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<String> signUp(@RequestBody SignUpRequestDto signUpRequestDto) throws Exception {
-        UUID uuid = authService.signUp(signUpRequestDto);
+    public ResponseEntity<String> signUp(@RequestBody SignUpRequest signUpRequest) throws Exception {
+        UUID uuid = authService.signUp(signUpRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 완료"+uuid);
     }
 
     @PostMapping("/signIn")
-    public LoginInResponseDto signIn(@RequestBody SignInRequestDto signInRequestDto) throws Exception {
-        return authService.signIn(signInRequestDto);
+    public LoginInResponseDto signIn(@RequestBody SignInRequest signInRequest) throws Exception {
+        return authService.signIn(signInRequest);
 //        return ResponseEntity.status(HttpStatus.OK).body("로그인 완료");
     }
 
@@ -51,7 +51,7 @@ public class AuthController {
 //    body : nickname1change
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable(name = "id") UUID id,
-                                             @RequestBody UpdateUserRequestDto req,
+                                             @RequestBody UpdateUserRequest req,
                                              @RequestParam(value= "type") String type
                                              ) throws Exception {
         if ("nickname".equals(type)) {
@@ -73,14 +73,14 @@ public class AuthController {
     }
 
     @PostMapping("/findLoginId")
-    public ResponseEntity<String> findLoginId(@RequestBody FindLoginIdRequestDto findLoginIdRequestDto) throws Exception {
-        authService.findLoginId(findLoginIdRequestDto);
+    public ResponseEntity<String> findLoginId(@RequestBody FindLoginIdRequest findLoginIdRequest) throws Exception {
+        authService.findLoginId(findLoginIdRequest);
         return ResponseEntity.status(HttpStatus.OK).body("아이디 찾기 이메일 전송 완료");
     }
 
     @PostMapping("/findPassword")
-    public ResponseEntity<String> findPassword(@RequestBody FindPasswordRequestDto findPasswordRequestDto) throws Exception {
-        authService.findPassword(findPasswordRequestDto);
+    public ResponseEntity<String> findPassword(@RequestBody FindPasswordRequest findPasswordRequest) throws Exception {
+        authService.findPassword(findPasswordRequest);
         return ResponseEntity.status(HttpStatus.OK).body("비밀번호 찾기 이메일 전송 완료");
     }
 

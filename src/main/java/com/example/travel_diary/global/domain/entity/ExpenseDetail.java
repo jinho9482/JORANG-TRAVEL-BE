@@ -1,5 +1,6 @@
 package com.example.travel_diary.global.domain.entity;
 
+import com.example.travel_diary.global.request.ExpenseDetailRequest;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,31 +21,26 @@ public class ExpenseDetail {
     private Long id;
 
     @Column(name = "COST")
-    @Setter
     private int cost;
 
     @Column(name = "PLACE")
-    @Setter
     private String place;
 
     @Column(name = "CATEGORY", nullable = false)
-    @Setter
     private String category;
-
-    @Column(name = "SCOPE", nullable = false)
-    @Setter
-    private String scope;
 
     @Column(name = "CREATED_AT")
     @Setter
     private LocalDateTime createdAt;
 
-    @Column(name = "COUNTRY")
-    @Setter
-    private String country;
-
     @JsonBackReference
     @JoinColumn(name = "EXPENSE_ID")
     @ManyToOne
     private Expense expense;
+
+    public void update(ExpenseDetailRequest req) {
+        if (req.cost() != this.cost) this.cost = req.cost();
+        if (req.place().equals(this.place)) this.place = req.place();
+        if (req.category().equals(this.category)) this.category = req.category();
+    }
 }

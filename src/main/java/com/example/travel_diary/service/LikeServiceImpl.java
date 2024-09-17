@@ -4,20 +4,24 @@ import com.example.travel_diary.global.domain.entity.Like;
 import com.example.travel_diary.global.domain.entity.Post;
 import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.domain.repository.LikeRepository;
+import com.example.travel_diary.global.response.LikePageResponse;
 import com.example.travel_diary.global.response.LikeResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LikeServiceImpl implements LikeService {
 
     private final LikeRepository likeRepository;
@@ -25,7 +29,7 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     @Transactional
-    public int likeComment(User user, Long postId) {
+    public int likePost(User user, Long postId) {
         Optional<Like> like = likeRepository.findByUser_IdAndPost_Id(user.getId(), postId);
         Post post = postService.getById(postId);
         if (like.isEmpty()) {
@@ -49,7 +53,7 @@ public class LikeServiceImpl implements LikeService {
 //    }
 
     @Override
-    public List<LikeResponse> getPosts(User user) {
+    public List<LikeResponse> getLikedPostsByUser(User user) {
         List<Like> likes = likeRepository.findAllByUserOrderByIdDesc(user);
         if (likes.isEmpty()) return null;
         return likes.stream().map(LikeResponse::from).toList();
@@ -67,18 +71,20 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public Page<LikeResponse> getList(User user, int page) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        Page<Like> allByUser = likeRepository.findAllByUser(user, pageable);
-        List<LikeResponse> likeResponses = allByUser.stream()
-                .map(LikeResponse::from)
-                .toList();
+    public LikePageResponse getLikedPostsByUserPerPage(User user, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Like> likes = likeRepository.findAllByUser(user, pageable);
+        int totalPage = likes.getTotalPages();
 
-        // PageImpl을 사용하여 Page<LikeResponse> 생성
-        return new PageImpl<>(likeResponses, pageable, allByUser.getTotalElements());
+        List<Long> postIds = likeRepository.findByUserPerPage(user.getId(), page * 10);
+        log.info(postIds.toString());
+        List<Post> posts = postIds.stream().map((postId) -> {
+            Post post = postService.getById(postId);
+            return post;
+        }).toList();
+        log.info(posts.toString());
+        LikePageResponse pageResponses = new LikePageResponse(totalPage, posts);
+//        List<LikeResponse> res = likes.stream().map(LikeResponse::from).toList();
+        return pageResponses;
     }
-
-
 }

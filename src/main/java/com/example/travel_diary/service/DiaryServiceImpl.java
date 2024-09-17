@@ -3,11 +3,10 @@ package com.example.travel_diary.service;
 
 import com.example.travel_diary.global.domain.entity.Diary;
 import com.example.travel_diary.global.domain.entity.Post;
-import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.domain.repository.DiaryRepository;
 import com.example.travel_diary.global.exception.DiaryNotFoundException;
-import com.example.travel_diary.global.request.DiaryRequestDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.travel_diary.global.request.DiarySaveRequest;
+import com.example.travel_diary.global.request.DiaryUpdateRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,12 +21,24 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final DiaryRepository diaryRepository;
 
+//    @Override
+//    @Transactional
+//    public Long createDiary(Long postId) {
+//        Post post = Post.builder().id(postId).build();
+//        Diary diary = Diary.builder().post(post).build();
+//        return diaryRepository.save(diary).getId();
+//    }
     @Override
     @Transactional
-    public Long createDiary(Long postId) {
-        Post post = Post.builder().id(postId).build();
-        Diary diary = Diary.builder().post(post).build();
-        return diaryRepository.save(diary).getId();
+    public List<Long> createDiary(List<DiarySaveRequest> req) {
+        List idList = new ArrayList<>();
+        req.forEach(el -> {
+            Post post = Post.builder().id(el.postId()).build();
+            Diary diary = el.toEntity(post);
+            Diary savedDiary = diaryRepository.save(diary);
+            idList.add(savedDiary.getId());
+        });
+        return idList;
     }
 
     @Override
@@ -40,17 +51,6 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryRepository.findAllByPost_Id(postId);
     }
 
-    @Override
-    @Transactional
-    public void updateDiary(Long id, DiaryRequestDto req) {
-        Diary diary = diaryRepository.findById(id).orElseThrow(DiaryNotFoundException::new);
-        diary.setTitle(req.title());
-        diary.setContent(req.content());
-        diary.setScope(req.scope());
-        diary.setDate(req.date());
-        diary.setCountry(req.country().toLowerCase());
-        diary.setCreatedAt(LocalDateTime.now());
-    }
 
     @Override
     @Transactional
@@ -59,19 +59,18 @@ public class DiaryServiceImpl implements DiaryService {
         diaryRepository.deleteById(id);
     }
 
+
     @Override
-    public List<String> getDiaryByUserAndCountry(User user) {
-        List<Diary> allByPostUser = diaryRepository.findAllByPost_User(user);
-        List<String> countryByUser = new ArrayList<>();
-        for(Diary diary : allByPostUser) {
-            if(!countryByUser.contains(diary.getCountry())) {
-                countryByUser.add(diary.getCountry());
-            }
-        }
-        return countryByUser;
+    @Transactional
+    public void updateDiary(List<DiaryUpdateRequest> req) {
+        req.forEach(el -> {
+            Diary diary = diaryRepository.findById(el.id()).orElseThrow(DiaryNotFoundException::new);
+            diary.setTitle(el.title());
+            diary.setContent(el.content());
+            diary.setDate(el.date());
+            diary.setCreatedAt(LocalDateTime.now());
+        });
     }
-
-
 }
 
 

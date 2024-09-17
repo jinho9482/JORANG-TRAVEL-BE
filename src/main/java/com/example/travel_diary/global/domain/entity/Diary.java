@@ -33,7 +33,7 @@ public class Diary {
     @Setter
     private String title;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition="TEXT")
     @Setter
     private String content;
 
@@ -41,18 +41,9 @@ public class Diary {
     @Setter
     private LocalDate date;
 
-    @Column(name = "SCOPE")
-    @Setter
-    @Enumerated(EnumType.STRING)
-    private Scope scope;
-
     @Column(name = "CREATED_AT")
     @Setter
     private LocalDateTime createdAt;
-
-    @Column(name = "COUNTRY")
-    @Setter
-    private String country;
 
     @JsonBackReference
     @JoinColumn(name = "POST_ID")
@@ -60,6 +51,7 @@ public class Diary {
     private Post post;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "diary")
+    // cascade 삭제 -> gcp 에 있는 photo도 같이 삭제하기 위해 (기존에는 db상 photo만 삭제됨)
     private List<Photo> photos;
 }

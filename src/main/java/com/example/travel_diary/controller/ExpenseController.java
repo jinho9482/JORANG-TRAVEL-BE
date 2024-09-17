@@ -1,11 +1,12 @@
 package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Expense;
-import com.example.travel_diary.global.request.ExpenseRequestDto;
+import com.example.travel_diary.global.request.ExpenseRequest;
 import com.example.travel_diary.global.response.ExpenseResponseDto;
 import com.example.travel_diary.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,26 +17,32 @@ import java.util.List;
 public class ExpenseController {
     private final ExpenseService expenseService;
 
-    @PostMapping
+//    @PostMapping("/posts/{postId}")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Long create(@PathVariable(name = "postId") Long postId,@RequestBody ExpenseRequest expenseRequest) {
+//        return expenseService.createExpense(postId, expenseRequest);
+//    }
+//
+//
+//
+//    @PutMapping("/update/{id}")
+//    public Expense update(@PathVariable(name = "id") Long id, @RequestBody ExpenseRequest req) {
+//        return expenseService.updateExpense(id, req);
+//    }
+
+    @PostMapping("/posts/{postId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody ExpenseRequestDto req) {
-        expenseService.saveExpense(req);
+    public List<ExpenseResponseDto> saveExpenses(@PathVariable(name = "postId") Long postId, @RequestBody List<ExpenseRequest> req){
+        return expenseService.saveExpenses(postId, req);
     }
 
-
-    @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody ExpenseRequestDto req) {
-        expenseService.updateExpense(id, req);
-    }
     @GetMapping("/{postId}")
-    public List<Expense> getAllByPostId(@PathVariable Long postId) {return expenseService.getAllByPostId(postId);
-
-
-    @PutMapping("/update/{id}")
-    public Expense update(@PathVariable(name = "id") Long id, @RequestBody ExpenseRequestDto req) {
-        return expenseService.updateExpense(id, req);
-
+    public List<Expense> getAllByPostId(@PathVariable Long postId) {
+        return expenseService.getAllByPostId(postId);
     }
+
+
+
     @GetMapping("/{id}")
     public ExpenseResponseDto getExpenseById(@PathVariable(name = "id") Long id) {
         return expenseService.getExpenseById(id);
