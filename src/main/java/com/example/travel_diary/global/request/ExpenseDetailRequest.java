@@ -13,12 +13,12 @@ public record ExpenseDetailRequest(
 //        Expense expense
 
 ) {
-    public ExpenseDetail toEntity(Expense expense) {
+    public ExpenseDetail toEntity(Long expenseId) {
+        Expense expense = Expense.builder().id(expenseId).build();
         return ExpenseDetail.builder()
                 .cost(cost)
                 .place(place)
                 .category(category)
-
                 .createdAt(LocalDateTime.now())
                 .expense(expense)
                 .build();

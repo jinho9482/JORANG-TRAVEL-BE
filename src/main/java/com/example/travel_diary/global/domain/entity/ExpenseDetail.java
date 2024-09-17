@@ -1,5 +1,6 @@
 package com.example.travel_diary.global.domain.entity;
 
+import com.example.travel_diary.global.request.ExpenseDetailRequest;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,15 +21,12 @@ public class ExpenseDetail {
     private Long id;
 
     @Column(name = "COST")
-    @Setter
     private int cost;
 
     @Column(name = "PLACE")
-    @Setter
     private String place;
 
     @Column(name = "CATEGORY", nullable = false)
-    @Setter
     private String category;
 
     @Column(name = "CREATED_AT")
@@ -37,6 +35,12 @@ public class ExpenseDetail {
 
     @JsonBackReference
     @JoinColumn(name = "EXPENSE_ID")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Expense expense;
+
+    public void update(ExpenseDetailRequest req) {
+        if (req.cost() != this.cost) this.cost = req.cost();
+        if (req.place().equals(this.place)) this.place = req.place();
+        if (req.category().equals(this.category)) this.category = req.category();
+    }
 }

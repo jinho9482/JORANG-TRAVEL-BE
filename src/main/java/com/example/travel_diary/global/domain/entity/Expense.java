@@ -35,7 +35,7 @@ public class Expense {
 
     @JsonBackReference
     @JoinColumn (name = "POST_ID")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Post post;
 
 

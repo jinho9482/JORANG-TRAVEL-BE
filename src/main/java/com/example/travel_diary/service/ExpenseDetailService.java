@@ -11,9 +11,9 @@ import java.util.List;
 public interface ExpenseDetailService {
 
 
-    void saveExpenseDetailByExpenseId(Long expenseId, List<ExpenseDetailRequest> requestDto);
+//    void saveExpenseDetailByExpenseId(Long expenseId, List<ExpenseDetailRequest> requestDto);
     ExpenseDetailResponseDto getExpenseDetailById(Long id);
-    void updateExpenseDetail(Long id, ExpenseDetailRequest requestDto);
+//    void updateExpenseDetail(Long id, ExpenseDetailRequest requestDto);
     void deleteExpenseDetailById(Long id);
     List<ExpenseDetailByUserAndCountryResponseDto> getExpenseDetailByUserAndCountry(User user);
 
@@ -21,5 +21,7 @@ public interface ExpenseDetailService {
 
 
     List<ExpenseDetailChartResponseDto> getExpenseDetailChart(Long postId);
+
+    void saveExpenseDetails(Long expenseId, List<ExpenseDetailRequest> req);
 
 }

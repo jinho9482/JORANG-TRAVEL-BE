@@ -6,6 +6,7 @@ import com.example.travel_diary.global.response.ExpenseResponseDto;
 import com.example.travel_diary.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,21 +17,25 @@ import java.util.List;
 public class ExpenseController {
     private final ExpenseService expenseService;
 
+//    @PostMapping("/posts/{postId}")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Long create(@PathVariable(name = "postId") Long postId,@RequestBody ExpenseRequest expenseRequest) {
+//        return expenseService.createExpense(postId, expenseRequest);
+//    }
+//
+//
+//
+//    @PutMapping("/update/{id}")
+//    public Expense update(@PathVariable(name = "id") Long id, @RequestBody ExpenseRequest req) {
+//        return expenseService.updateExpense(id, req);
+//    }
+
     @PostMapping("/posts/{postId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public long save(@PathVariable(name = "postId") Long postId,@RequestBody ExpenseRequest expenseRequest) {
-        return expenseService.saveExpense(postId, expenseRequest);
+    public List<ExpenseResponseDto> saveExpenses(@PathVariable(name = "postId") Long postId, @RequestBody List<ExpenseRequest> req){
+        return expenseService.saveExpenses(postId, req);
     }
 
-
-
-    @PutMapping("/update/{id}")
-    public Expense update(@PathVariable(name = "id") Long id, @RequestBody ExpenseRequest req) {
-        return expenseService.updateExpense(id, req);
-
-
-    
-    }
     @GetMapping("/{postId}")
     public List<Expense> getAllByPostId(@PathVariable Long postId) {
         return expenseService.getAllByPostId(postId);

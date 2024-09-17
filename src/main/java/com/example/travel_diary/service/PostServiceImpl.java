@@ -9,6 +9,7 @@ import com.example.travel_diary.global.exception.PostNotPublicException;
 import com.example.travel_diary.global.exception.PostNotFoundException;
 import com.example.travel_diary.global.request.PostRequest;
 import com.example.travel_diary.global.request.PostTempRequest;
+import com.example.travel_diary.global.response.CountryCostDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -184,8 +185,18 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<String> getNumberOfCountriesVisited(User user) {
-        List<String> countries = postRepository.findMyCountry(user);
-        log.info(countries.toString());
-        return countries;
+        List<String> res = postRepository.findMyCountry(user);
+        log.info(res.toString());
+        return res;
+    }
+
+    @Override
+    public List<CountryCostDto> getTotalCostPerCountry(User user) {
+        List<Object[]> res = postRepository.findTotalCostPerCountry(user.getId());
+        List<CountryCostDto> totalCostPerCountry = res.stream()
+                .map(el -> new CountryCostDto((String) el[0], ((Number) el[1]).longValue()))
+                .toList();
+        log.info(totalCostPerCountry.toString());
+        return totalCostPerCountry;
     }
 }

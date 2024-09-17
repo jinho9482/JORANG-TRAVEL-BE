@@ -33,7 +33,7 @@ public class Diary {
     @Setter
     private String title;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition="TEXT")
     @Setter
     private String content;
 

@@ -8,10 +8,6 @@ import java.time.LocalDate;
 public record ExpenseRequest(
     LocalDate date
 
-//    Long postId
-
-
-
     ){
     public Expense toEntity(Post post){
 //        Post post = Post.builder().id(this.postId).build();

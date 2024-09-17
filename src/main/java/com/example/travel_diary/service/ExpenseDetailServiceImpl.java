@@ -12,6 +12,7 @@ import com.example.travel_diary.global.response.ExpenseDetailChartTempResponseDt
 import com.example.travel_diary.global.response.ExpenseDetailResponseDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,26 +22,27 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExpenseDetailServiceImpl implements ExpenseDetailService {
     private final ExpenseDetailRepository expenseDetailRepository;
     private final ExpenseRepository expenseRepository;
 
-    @Transactional
-    @Override
-    public void saveExpenseDetailByExpenseId(Long expenseId, List<ExpenseDetailRequest> requestDto) {
-        Expense expense = expenseRepository.findById(expenseId).orElseThrow(EntityNotFoundException::new);
-        List<ExpenseDetail> expenseDetails = requestDto.stream()
-                .map(dto -> dto.toEntity(expense))  // Expense 객체를 포함하여 Entity 생성
-                .collect(Collectors.toList());
-        expenseDetailRepository.saveAll(expenseDetails);
-//        requestDto.forEach(e -> expenseDetailRepository.save(e.toEntity()));
-
-//        expenseDetailRepository.save(requestDto.toEntity());
-
-   // public void saveExpenseDetail(ExpenseDetailRequestDto requestDto) {
-     //   expenseDetailRepository.save(requestDto.toEntity());
-
-    }
+//    @Transactional
+//    @Override
+//    public void saveExpenseDetailByExpenseId(Long expenseId, List<ExpenseDetailRequest> requestDto) {
+//        Expense expense = expenseRepository.findById(expenseId).orElseThrow(EntityNotFoundException::new);
+//        List<ExpenseDetail> expenseDetails = requestDto.stream()
+//                .map(dto -> dto.toEntity(expense))  // Expense 객체를 포함하여 Entity 생성
+//                .collect(Collectors.toList());
+//        expenseDetailRepository.saveAll(expenseDetails);
+////        requestDto.forEach(e -> expenseDetailRepository.save(e.toEntity()));
+//
+////        expenseDetailRepository.save(requestDto.toEntity());
+//
+//   // public void saveExpenseDetail(ExpenseDetailRequestDto requestDto) {
+//     //   expenseDetailRepository.save(requestDto.toEntity());
+//
+//    }
 
     @Override
     public ExpenseDetailResponseDto getExpenseDetailById(Long id) {
@@ -49,15 +51,15 @@ public class ExpenseDetailServiceImpl implements ExpenseDetailService {
         return ExpenseDetailResponseDto.from(expenseDetail);
     }
 
-    @Transactional
-    @Override
-    public void updateExpenseDetail(Long id, ExpenseDetailRequest requestDto) {
-        ExpenseDetail expenseDetail = expenseDetailRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        expenseDetail.setCost(requestDto.cost());
-        expenseDetail.setPlace(requestDto.place());
-        expenseDetail.setCategory(requestDto.category());
-    }
+//    @Transactional
+//    @Override
+//    public void updateExpenseDetail(Long id, ExpenseDetailRequest requestDto) {
+//        ExpenseDetail expenseDetail = expenseDetailRepository.findById(id)
+//                .orElseThrow(EntityNotFoundException::new);
+//        expenseDetail.setCost(requestDto.cost());
+//        expenseDetail.setPlace(requestDto.place());
+//        expenseDetail.setCategory(requestDto.category());
+//    }
 
     @Transactional
     @Override
@@ -118,5 +120,17 @@ public class ExpenseDetailServiceImpl implements ExpenseDetailService {
         }
         return result;
 
+    }
+
+    @Override
+    @Transactional
+    public void saveExpenseDetails(Long expenseId, List<ExpenseDetailRequest> req) {
+        log.info(req.toString());
+        List<ExpenseDetail> details = expenseDetailRepository.findAllByExpense_Id(expenseId);
+        if (details.isEmpty()) req.forEach(el -> expenseDetailRepository.save(el.toEntity(expenseId)));
+        else {
+            expenseDetailRepository.deleteAllByExpense_Id(expenseId);
+            req.forEach(el -> expenseDetailRepository.save(el.toEntity(expenseId)));
+        }
     }
 }
