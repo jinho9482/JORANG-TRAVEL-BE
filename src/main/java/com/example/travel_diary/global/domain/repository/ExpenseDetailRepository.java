@@ -19,5 +19,7 @@ public interface ExpenseDetailRepository extends JpaRepository<ExpenseDetail, Lo
 
     List<ExpenseDetail> findAllByCategoryAndExpense_Post_Id(String category, Long postId);
 
+    List<ExpenseDetail> findAllByExpense_Id(Long expenseId);
+    void deleteAllByExpense_Id(Long expenseId);
 }
 

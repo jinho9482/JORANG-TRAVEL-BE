@@ -1,11 +1,14 @@
 package com.example.travel_diary.controller;
 
+import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.request.ExpenseDetailRequest;
+import com.example.travel_diary.global.response.ExpenseDetailByUserAndCountryResponseDto;
 import com.example.travel_diary.global.response.ExpenseDetailChartResponseDto;
 import com.example.travel_diary.global.response.ExpenseDetailResponseDto;
 import com.example.travel_diary.service.ExpenseDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,20 +19,20 @@ import java.util.List;
 public class ExpenseDetailController {
     private final ExpenseDetailService expenseDetailService;
 
-    @PostMapping("expenses/{expenseId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void saveExpenseDetailByExpenseId( @PathVariable("expenseId") Long expenseId ,@RequestBody List<ExpenseDetailRequest> requestDto) {
-
-        expenseDetailService.saveExpenseDetailByExpenseId(expenseId ,requestDto);
-
-    }
-
-
-//("/expenses/{expenseId}")
-    @PutMapping("/{id}")
-    public void updateExpenseDetail(@PathVariable(name = "id") Long id, @RequestBody ExpenseDetailRequest requestDto) {
-        expenseDetailService.updateExpenseDetail(id, requestDto);
-    }
+//    @PostMapping("expenses/{expenseId}")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void saveExpenseDetailByExpenseId( @PathVariable("expenseId") Long expenseId ,@RequestBody List<ExpenseDetailRequest> requestDto) {
+//
+//        expenseDetailService.saveExpenseDetailByExpenseId(expenseId ,requestDto);
+//
+//    }
+//
+//
+////("/expenses/{expenseId}")
+//    @PutMapping("/{id}")
+//    public void updateExpenseDetail(@PathVariable(name = "id") Long id, @RequestBody ExpenseDetailRequest requestDto) {
+//        expenseDetailService.updateExpenseDetail(id, requestDto);
+//    }
 //@GetMapping("/{expenseId")
 //public List<ExpenseDetail> getAllbyExpenseId(@PathVariable Long expenseId) {}
 
@@ -43,10 +46,10 @@ public class ExpenseDetailController {
         expenseDetailService.deleteExpenseDetailById(id);
     }
 
-//    @GetMapping("/mypage")
-//    public List<ExpenseDetailByUserAndCountryResponseDto> getExpenseDetailByUserAndCountry(@AuthenticationPrincipal User user) {
-//        return expenseDetailService.getExpenseDetailByUserAndCountry(user);
-//    }
+    @GetMapping("/mypage")
+    public List<ExpenseDetailByUserAndCountryResponseDto> getExpenseDetailByUserAndCountry(@AuthenticationPrincipal User user) {
+        return expenseDetailService.getExpenseDetailByUserAndCountry(user);
+    }
 
 
     @GetMapping("/by-post/{postId}")
@@ -66,6 +69,12 @@ public class ExpenseDetailController {
     @GetMapping("/chart/postId/{postId}")
     public List<ExpenseDetailChartResponseDto> getExpenseDetailChart(@PathVariable("postId") Long postId) {
         return expenseDetailService.getExpenseDetailChart(postId);
+    }
+
+    @PostMapping("expenses/{expenseId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveExpenseDetails(@PathVariable(name = "expenseId") Long expenseId, @RequestBody List<ExpenseDetailRequest> req) {
+        expenseDetailService.saveExpenseDetails(expenseId, req);
     }
 }
 

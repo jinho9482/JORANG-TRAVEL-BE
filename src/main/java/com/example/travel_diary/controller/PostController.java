@@ -4,6 +4,7 @@ import com.example.travel_diary.global.domain.entity.Post;
 import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.request.PostRequest;
 import com.example.travel_diary.global.request.PostTempRequest;
+import com.example.travel_diary.global.response.CountryCostDto;
 import com.example.travel_diary.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -145,4 +146,8 @@ public class PostController {
         return postService.getNumberOfCountriesVisited(user);
     }
 
+    @GetMapping("/my/total-cost")
+    public List<CountryCostDto> getMyTotalCostPerCountry(@AuthenticationPrincipal User user) {
+        return postService.getTotalCostPerCountry(user);
+    }
 }
