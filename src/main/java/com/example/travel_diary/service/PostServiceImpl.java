@@ -61,6 +61,8 @@ public class PostServiceImpl implements PostService {
     public void updateTemporaryPost(Long id, PostTempRequest req) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
         post.setTitle(req.title());
+        post.setPublished(false);
+        post.setCreatedAt(LocalDateTime.now());
     }
 
     @Override
@@ -194,9 +196,17 @@ public class PostServiceImpl implements PostService {
     public List<CountryCostDto> getTotalCostPerCountry(User user) {
         List<Object[]> res = postRepository.findTotalCostPerCountry(user.getId());
         List<CountryCostDto> totalCostPerCountry = res.stream()
-                .map(el -> new CountryCostDto((String) el[0], ((Number) el[1]).longValue()))
+                .map(el -> new CountryCostDto((String) el[0], el[1] != null ? ((Number) el[1]).longValue() : 0))
                 .toList();
         log.info(totalCostPerCountry.toString());
         return totalCostPerCountry;
+    }
+
+    @Override
+    public List<Post> getPostsByKeyword(String keyword) {
+        log.info(keyword);
+        List<Post> filteredPosts = postRepository.findPostsByKeyword(keyword);
+        log.info(filteredPosts.toString());
+        return filteredPosts;
     }
 }

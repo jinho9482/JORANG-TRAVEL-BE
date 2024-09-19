@@ -35,12 +35,23 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<String> findMyCountry(@Param("user") User user);
 
     @Query(value = "SELECT p.country, SUM(d.cost) AS totalCost FROM posts p " +
-            "INNER JOIN expenses e ON e.post_id = p.post_id " +
-            "INNER JOIN expense_details d ON d.expense_id = e.expense_id " +
+            "LEFT JOIN expenses e ON e.post_id = p.post_id " +
+            "LEFT JOIN expense_details d ON d.expense_id = e.expense_id " +
             "WHERE p.is_published = true " +
             "AND p.user_id = :userId " +
             "GROUP BY p.country", nativeQuery = true)
     List<Object[]> findTotalCostPerCountry(@Param("userId") UUID userId);
+
+    @Query(value = "SELECT DISTINCT p.* FROM posts p " +
+            "LEFT JOIN diaries d ON d.post_id = p.post_id " +
+            "LEFT JOIN expenses e ON e.post_id = p.post_id " +
+            "LEFT JOIN expense_details ed ON ed.expense_id = e.expense_id " +
+            "WHERE p.is_published = true " +
+            "AND (p.title LIKE CONCAT('%', :keyword, '%') " +
+            "OR d.title LIKE CONCAT('%', :keyword, '%') " +
+            "OR d.content LIKE CONCAT('%', :keyword, '%') " +
+            "OR ed.place LIKE CONCAT('%', :keyword, '%'))", nativeQuery = true)
+    List<Post> findPostsByKeyword(@Param("keyword") String keyword);
 }
 
 
