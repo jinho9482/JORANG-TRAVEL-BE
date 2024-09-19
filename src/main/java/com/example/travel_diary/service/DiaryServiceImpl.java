@@ -3,6 +3,7 @@ package com.example.travel_diary.service;
 
 import com.example.travel_diary.global.domain.entity.Diary;
 import com.example.travel_diary.global.domain.entity.Post;
+import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.domain.repository.DiaryRepository;
 import com.example.travel_diary.global.exception.DiaryNotFoundException;
 import com.example.travel_diary.global.request.DiarySaveRequest;
@@ -70,6 +71,12 @@ public class DiaryServiceImpl implements DiaryService {
             diary.setDate(el.date());
             diary.setCreatedAt(LocalDateTime.now());
         });
+    }
+
+    @Override
+    public List<String> getMyDiaryContents(User user) {
+        List<String> myDiaryContents = diaryRepository.findMyDiaryContents(user.getId());
+        return myDiaryContents;
     }
 }
 

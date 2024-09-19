@@ -1,11 +1,13 @@
 package com.example.travel_diary.controller;
 
 import com.example.travel_diary.global.domain.entity.Diary;
+import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.request.DiarySaveRequest;
 import com.example.travel_diary.global.request.DiaryUpdateRequest;
 import com.example.travel_diary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,4 +54,8 @@ public class DiaryController {
 //        return diaryService.getDiaryByUserAndCountry(user);
 //    }
 
+    @GetMapping("/chatbot")
+    public List<String> getMyDiaryContents(@AuthenticationPrincipal User user) {
+        return diaryService.getMyDiaryContents(user);
+    }
 }

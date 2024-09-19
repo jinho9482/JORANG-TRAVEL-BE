@@ -6,12 +6,10 @@ import com.example.travel_diary.global.request.PostRequest;
 import com.example.travel_diary.global.request.PostTempRequest;
 import com.example.travel_diary.global.response.CountryCostDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 public interface PostService {
     // 생성
@@ -49,4 +47,5 @@ public interface PostService {
     List<String> getNumberOfCountriesVisited(User user);
 
     List<CountryCostDto> getTotalCostPerCountry(User user);
+    List<Post> getPostsByKeyword(String keyword);
 }

@@ -150,4 +150,9 @@ public class PostController {
     public List<CountryCostDto> getMyTotalCostPerCountry(@AuthenticationPrincipal User user) {
         return postService.getTotalCostPerCountry(user);
     }
+
+    @GetMapping("/search")
+    public List<Post> getPostsByKeyword(@RequestParam(value = "keyword") String keyword) {
+        return postService.getPostsByKeyword(keyword);
+    }
 }
