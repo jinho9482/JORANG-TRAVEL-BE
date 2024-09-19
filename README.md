@@ -1,10 +1,7 @@
 # ✈️ JORANG 여행에 대한 모든 것
 
-## 📃 프로젝트 개발 동기
-개인적으로 해외 여행을 좋아하는데, 다른 사람들은 내가 가고 싶은 여행지에 대해 어떻게 생각하고 계획과 경비를 어떻게 짰는지 확인하기 위해 서비스를 개발하였습니다.
-
-## 📃 프로젝트 소개
-나의 여행 계획, 일지, 실제 사용한 경비를 관리하고 사람들과 공유하여 다른 사람들의 여행기를 읽고 소통하면서 내 여행을 준비하는데 필요한 정보를 얻을 수 있다.
+## <br>📃 프로젝트 소개
+나의 여행 계획, 일지, 실제 사용한 경비를 관리하고 사람들과 공유하여 다른 사람들의 여행기를 읽고 소통하면서 내 여행을 준비하는데 필요한 정보를 얻을 수 있습니다.<br><br>
 
 ## 📃 핵심 기능
 ### 1. 여행기, 경비, 계획 작성 및 공유
@@ -16,10 +13,8 @@
 - 여행 일지 최신순, 좋아요순 정렬 및 여행 기간에 따른 여행 일지 필터 구현
 - 유저 아이디, 이메일 변경 시 이메일로 임시 비밀번호 발송
 
-### 2. 챗봇 (아래 Langchain server 참고)
-
-- Langchain을 이용하여 명소, 여행지, 여행 계획 추천 기능 및 내 맞춤 여행 계획 추천 구현
-  (LLM : Google Gemini, Framework : FastAPI)
+### 전체 프로젝트 소개
+https://github.com/jinho9482/JORANG-TRAVEL
 
 ### Langchain server
 https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
@@ -28,7 +23,7 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 
 
-## ⚙️ 기술스택
+## <br>⚙️ 기술스택
 
 ### Server Framework
 ![Spring-Boot](https://img.shields.io/badge/spring--boot-%236DB33F.svg?style=for-the-badge&logo=springboot&logoColor=white)
@@ -38,11 +33,6 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 
 ### Infra Framework
 ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
-
-## 🧑🏻‍💻 멤버구성
- - 조진호
- - 김세현
- - 임서연
    
 ## 프로젝트 구조
 
@@ -168,7 +158,7 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 ## 🔗 ERD
 ![image](https://github.com/user-attachments/assets/4266a2da-99d2-4027-a9fe-c7a8451c26a4)
 
-## 트러블 슈팅
+##  🔧 트러블 슈팅
 
 **1. Google cloud storage를 사용할 때 Front에서 file type의 input을 보낼 때 이로부터 파일 경로를 읽어올 수 없음<br><br>**
 > * 원인 : Front에서 file type의 input을 보낼 때는 파일 경로를 back으로 보내지 않는다.<br>
@@ -229,4 +219,3 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 **7. JPQL에서는 LIMIT 사용 불가<br><br>**
 >* 원인 : LIMIT 를 지원하지 않는다.
 >* 해결 : Page class를 사용할 수 있으나, GROUP BY와 같이 jpa named query에 포함 안되는 query를 사용할 때는 native query를 사용
-
