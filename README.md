@@ -217,4 +217,16 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 >ALTER TABLE expenses DROP INDEX UK_86u9tadcvh7keuk8sj6x50p65;
 >```
 
+<br>
+
+**6. Table을 3개 이상 join할 때는 native query 사용<br><br>**
+>* 원인 : OneToMany의 many에 해당하는 column은 기본적으로 Lazy loading 때문에 fetch join을 사용해야 데이터를 필터링해서 가져올 수 있다. <br>
+하지만 fetch join은 2개의 테이블까지만 join이 가능하기에 3개의 table을 join할 때는 native query를 써야 한다.<br> 
+>* 해결 : native query 사용
+
+<br>
+
+**7. JPQL에서는 LIMIT 사용 불가<br><br>**
+>* 원인 : LIMIT 를 지원하지 않는다.
+>* 해결 : Page class를 사용할 수 있으나, GROUP BY와 같이 jpa named query에 포함 안되는 query를 사용할 때는 native query를 사용
 
