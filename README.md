@@ -17,7 +17,7 @@
 https://github.com/jinho9482/JORANG-TRAVEL
 
 ### Langchain server
-https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
+https://github.com/encore-full-stack-5/JORANG_LANGCHAIN_SERVER
 
 ### Front-End
 https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
