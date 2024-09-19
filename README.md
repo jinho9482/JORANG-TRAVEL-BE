@@ -172,21 +172,21 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 
 **1. Google cloud storage를 사용할 때 Front에서 file type의 input을 보낼 때 이로부터 파일 경로를 읽어올 수 없음<br><br>**
 > * 원인 : Front에서 file type의 input을 보낼 때는 파일 경로를 back으로 보내지 않는다.<br>
-> * 개선 : Server에서 MultipartFile[] type으로 받고 front에서 FormData형식으로 server로 보내서 해결<br>
+> * 해결 : Server에서 MultipartFile[] type으로 받고 front에서 FormData형식으로 server로 보내서 해결<br>
 
 <br>
 
 **2. Post entity를 Page type으로 가져올 때, 요청한 size 보다 적은 데이터를 가져옴<br><br>**
 >* 원인 : 아래 그림과 같이 1개의 Post id에 여러 개의 Diary id가 join되어있어, size가 5라고 하면, post_id 가 4번인 것까지 가져온다.<br>
 >![image](https://github.com/user-attachments/assets/9408e91b-6ef9-4266-a486-cc0004a66a8f)<br>
->* 개선 : Front 에서 최신순과 같은 정렬을 할 때 전체 Post를 기준으로 정렬하지 못하고, 현재 page내에서만 정렬을 하여 Page<Post> → List<Post>를 return 하는 것으로 변경<br>
+>* 해결 : Front 에서 최신순과 같은 정렬을 할 때 전체 Post를 기준으로 정렬하지 못하고, 현재 page내에서만 정렬을 하여 Page<Post> → List<Post>를 return 하는 것으로 변경<br>
 
 <br>
 
 **3. Post service에서 Post와 OneToMany 관계에 있는 Diary entity의 scope(공개 범위) column가 공개인 것만 가져오는 jpa method 작성하였을 때, 비공개 데이터도 가져옴.<br><br>**
 >* 원인 : Diary entity가 Post 기준 OneToMany관계에 있기 때문에 기본적으로 lazy loading 상태이다. 이 때, Diary를 아직 읽어오지 않은 상태에서 Diary의 scope column에 where절을 적용하기 때문에, 해당 조건은 적용되지 않는다.<br> 
->* 개선1 : Fetch join으로 Diary entity를 첫 query부터 가져와 조건 적용<br>
->* 개선2 : 결국 table 구조 변경으로 fetch join 불필요로 삭제<br><br>
+>* 해결1 : Fetch join으로 Diary entity를 첫 query부터 가져와 조건 적용<br>
+>* 해결2 : 결국 table 구조 변경으로 fetch join 불필요로 삭제<br><br>
 
 <br>
 
@@ -194,7 +194,7 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 >* 원인 : Input 값이 길어 Diary table의 content column이 용량 초과로 받아들이지 못함<br>
 >* 해결1 : SQL문을 적용하여 LONGTEXT 로 전환
 >```mysql
->ALTER TABLE diaries MODIFY content LONGTEXT
+>ALTER TABLE diaries MODIFY content LONGTEXT;
 >```
 >* 해결2 : Diary entity의 column 설정 추가 -> column length를  65,535 bytes까지 늘림
 >```java
@@ -203,6 +203,18 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 >private String content;
 >```
 
-5. 
+<br>
+
+**5. ddl-auto: update 상태에서 Unique key 해제 불가<br><br>**
+>* 원인 : Hibernate가 database schema를 update할 때 index와 같은 제한 조건은 그대로 둠<br> 
+>* 해결
+>  1. Index 찾기 (unique key 설정은 index로 설정된다. @ MYSQL)
+>```mysql
+>SHOW INDEX FROM expenses WHERE Column_name = 'date';
+>```
+>  2. Index 삭제 (Key_name 이용)
+>```mysql
+>ALTER TABLE expenses DROP INDEX UK_86u9tadcvh7keuk8sj6x50p65;
+>```
 
 
