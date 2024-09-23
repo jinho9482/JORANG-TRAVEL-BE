@@ -23,13 +23,6 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-////    @RolesAllowed("USER")
-//    public Long createPost(@AuthenticationPrincipal User user) {
-//        return postService.createPost(user);
-//    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 //    @RolesAllowed("USER")

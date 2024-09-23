@@ -4,6 +4,8 @@ import com.example.travel_diary.global.request.*;
 import com.example.travel_diary.global.response.GetUserByIdResponseDto;
 import com.example.travel_diary.global.response.LoginInResponseDto;
 import com.example.travel_diary.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +21,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signUp")
+//    @Operation(summary = "회원가입", description = "회원가입")
     public ResponseEntity<String> signUp(@RequestBody SignUpRequest signUpRequest) throws Exception {
         UUID uuid = authService.signUp(signUpRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 완료"+uuid);
     }
 
     @PostMapping("/signIn")
+//    @Operation(summary = "로그인", description = "로그인")
     public LoginInResponseDto signIn(@RequestBody SignInRequest signInRequest) throws Exception {
         return authService.signIn(signInRequest);
 //        return ResponseEntity.status(HttpStatus.OK).body("로그인 완료");
