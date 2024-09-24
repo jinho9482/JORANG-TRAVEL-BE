@@ -27,7 +27,6 @@ import java.util.UUID;
 
 
 @SpringBootTest
-@Transactional
 class PostServiceTest {
 
     @Autowired
@@ -35,7 +34,7 @@ class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
     @Autowired
-    private UserRepository savedUserRepository;
+    private UserRepository userRepository;
     @Autowired
     private DiaryRepository diaryRepository;
     @Autowired
@@ -66,7 +65,7 @@ class PostServiceTest {
                 .createdAt(LocalDateTime.now())
                 .posts(new ArrayList<>())
                 .build();
-        savedUserRepository.save(user);
+        userRepository.save(user);
 
 
         for (int i = 1; i < 6; i++) {
