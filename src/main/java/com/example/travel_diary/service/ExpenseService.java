@@ -9,15 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface ExpenseService {
-//    Long createExpense(Long postId, ExpenseRequest expenseRequest);
-//    Expense updateExpense(Long id, ExpenseRequest expenseRequest);
-    List<Expense> getAllByPostId(Long id);
-    ExpenseResponseDto getExpenseById(Long id);
     void deleteExpenseById(Long id);
     List<ExpenseResponseDto> saveExpenses(Long postId, List<ExpenseRequest> req);
-//    List<Expense> getAllExpense();
-//
-//    List<ExpenseByUserAndCountryResponseDto>getExpenseByUserAndCountry(User user);
-
-
 }

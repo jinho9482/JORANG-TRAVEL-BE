@@ -55,33 +55,7 @@ public class PhotoServiceImpl implements PhotoService {
             photoRepository.save(photo);
         }
     }
-
-
-    @Override
-    public Photo getById(Long id) {
-        return photoRepository.findById(id).orElseThrow(PhotoNotFoundException::new);
-    }
-
-    @Override
-    public List<Photo> getByDiaryId(Long diaryId) {
-        return photoRepository.findAllByDiary_Id(diaryId);
-    }
-
-//    @Override
-//    @Transactional
-//    public void update(Long id, MultipartFile file) throws IOException {
-//        Photo photo = photoRepository.findById(id).orElseThrow(PhotoNotFoundException::new);
-//        BlobId blobId = BlobId.of(BUCKET_NAME, photo.getStoragePath());
-//        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
-//        try {
-//            InputStream inputStream = file.getInputStream();
-//            storage.createFrom(blobInfo, inputStream);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        String googlePath = storage.get(blobId).getMediaLink();
-//        photo.setPhotoURL(googlePath);
-//    }
+    
     @Override
     @Transactional
     public void savePhotos(PhotoRequest req) throws IOException {

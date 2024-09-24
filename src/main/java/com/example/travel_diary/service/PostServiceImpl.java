@@ -33,14 +33,6 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
-    // 여행 일지 작성 누르면 바로 post id를 생성 시킴, 업데이트도 작성일자만 갱신
-//    @Override
-//    @Transactional
-//    public Long createPost(@AuthenticationPrincipal User user) {
-//        Post post = postRepository.save(Post.builder().user(user).build());
-//        return post.getId();
-//    }
-
     @Override
     @Transactional
     public Long createPost(User user, PostRequest req) {
@@ -74,7 +66,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void update(Long id, PostRequest req) {
+    public void updatePost(Long id, PostRequest req) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
         post.setTitle(req.title());
         post.setCountry(req.country());
@@ -83,10 +75,6 @@ public class PostServiceImpl implements PostService {
         post.setPublished(true);
     }
 
-    @Override
-    public List<Post> getAll() {
-        return postRepository.findAllByScope(Scope.PUBLIC);
-    }
 
     @Override
     public Post getById(Long id) {
@@ -97,7 +85,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getMyPostById(User user, Long id) {
-        return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+        return postRepository.findByUserAndId(user, id).orElseThrow(PostNotFoundException::new);
     }
 
 
@@ -122,15 +110,10 @@ public class PostServiceImpl implements PostService {
         LocalDateTime today = LocalDateTime.now().toLocalDate().atStartOfDay();
         LocalDateTime startOfWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDateTime endOfWeek = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-        System.out.println(today);
-        System.out.println(startOfWeek);
-        System.out.println(endOfWeek);
+        log.info(today.toString());
+        log.info(startOfWeek.toString());
+        log.info(endOfWeek.toString());
         return postRepository.findTop5ByScopeAndIsPublishedAndCreatedAtBetweenOrderByLoveDesc(Scope.PUBLIC, true, startOfWeek, endOfWeek);
-    }
-
-    @Override
-    public List<Post> getRecentPostsFirstBetweenTheseDates(LocalDate from, LocalDate to) {
-        return postRepository.findAllByScopeAndIsPublishedAndCreatedAtBetweenOrderByCreatedAtDesc(Scope.PUBLIC, true, from, to);
     }
 
     @Override
@@ -172,21 +155,8 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAllByIsPublishedAndUserOrderByCreatedAtDesc(true, user);
     }
 
-    //    @Override
-//    public Set<String> getCountriesFromMyPosts(User user) {
-//        List<Post> posts = postRepository.findAllByUser(user);
-//        Set<String> countries = new HashSet<>();
-//        posts.forEach((post) -> countries.add(post.getCountry()));
-//        return countries;
-//    }
-
     @Override
-    public List<Post> getMyPosts(User user) {
-        return postRepository.findAllByUser(user);
-    }
-
-    @Override
-    public List<String> getNumberOfCountriesVisited(User user) {
+    public List<String> getCountriesVisited(User user) {
         List<String> res = postRepository.findMyCountry(user);
         log.info(res.toString());
         return res;
@@ -205,7 +175,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPostsByKeyword(String keyword) {
         log.info(keyword);
-        List<Post> filteredPosts = postRepository.findPostsByKeyword(keyword);
+        List<Post> filteredPosts = postRepository.findPostsByKeyword(keyword, Scope.PUBLIC);
         log.info(filteredPosts.toString());
         return filteredPosts;
     }
