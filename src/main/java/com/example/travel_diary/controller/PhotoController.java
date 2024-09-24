@@ -22,7 +22,7 @@ public class PhotoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "사진 저장")
+    @Operation(summary = "기존 사진을 지우고 저장", description = "실제 Front에서 사용한다")
     public void savePhotos(PhotoRequest req) throws IOException {
         log.info(req.toString());
         photoService.savePhotos(req);
