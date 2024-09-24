@@ -14,23 +14,20 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findAllByScope(Scope scope);
-    List<Post> findAllByScopeAndIsPublished(Scope scope, boolean isPublished);
-
+    List<Post> findAllByUser(User user);
+    Optional<Post> findByUserAndId(User user, Long id);
     List<Post> findAllByIsPublishedAndUserOrderByCreatedAtDesc(boolean isPublished, User user);
     List<Post> findAllByScopeAndIsPublishedOrderByCreatedAtDesc(Scope scope, boolean isPublished);
     List<Post> findTop5ByScopeAndCountryAndIsPublishedOrderByCreatedAtDesc(Scope scope, String country, boolean isPublished);
     List<Post> findAllByScopeAndCountryAndIsPublishedOrderByCreatedAtDesc(Scope scope, String country, boolean isPublished);
     List<Post> findTop5ByScopeAndIsPublishedAndCreatedAtBetweenOrderByLoveDesc(Scope scope, boolean isPublished, LocalDateTime startOfWeek, LocalDateTime endOfWeek);
-    List<Post> findAllByScopeAndIsPublishedAndCreatedAtBetweenOrderByCreatedAtDesc(Scope scope, boolean isPublished, LocalDate from, LocalDate to);
     List<Post> findTop5ByScopeAndIsPublishedOrderByCreatedAtDesc(Scope scope, boolean isPublished);
     List<Post> findAllByUserOrderByCreatedAtDesc(User user);
     Page<Post> findAllByIsPublishedAndUser(boolean isPublished, User user, Pageable pageable);
-    List<Post> findAllByUser(User user);
-    List<Post> findAllByIsPublishedOrderByCreatedAtDesc(boolean isPublished);
     @Query("SELECT country FROM Post WHERE user = :user AND isPublished = true GROUP BY country")
     List<String> findMyCountry(@Param("user") User user);
 
@@ -47,11 +44,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "LEFT JOIN expenses e ON e.post_id = p.post_id " +
             "LEFT JOIN expense_details ed ON ed.expense_id = e.expense_id " +
             "WHERE p.is_published = true " +
+            "AND p.scope = :scope " +
             "AND (p.title LIKE CONCAT('%', :keyword, '%') " +
             "OR d.title LIKE CONCAT('%', :keyword, '%') " +
             "OR d.content LIKE CONCAT('%', :keyword, '%') " +
-            "OR ed.place LIKE CONCAT('%', :keyword, '%'))", nativeQuery = true)
-    List<Post> findPostsByKeyword(@Param("keyword") String keyword);
+            "OR ed.place LIKE CONCAT('%', :keyword, '%')) " +
+            "ORDER BY p.created_at " +
+            "DESC", nativeQuery = true)
+    List<Post> findPostsByKeyword(@Param("keyword") String keyword, @Param("scope") Scope scope);
 }
 
 

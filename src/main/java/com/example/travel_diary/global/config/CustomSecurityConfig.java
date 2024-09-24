@@ -18,6 +18,8 @@ import java.util.List;
 public class CustomSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         security.csrf(AbstractHttpConfigurer::disable);
@@ -58,6 +60,9 @@ public class CustomSecurityConfig {
                                 "/api/v1/diaries/posts/**",
                                 "/api/v1/likes/posts/**",
                                 "/api/v1/posts/recent/diaries",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
 //                                "/api/v1/posts",
                                 "/ela")
                         .permitAll()
