@@ -21,14 +21,6 @@ import java.util.List;
 public class DiaryServiceImpl implements DiaryService {
 
     private final DiaryRepository diaryRepository;
-
-//    @Override
-//    @Transactional
-//    public Long createDiary(Long postId) {
-//        Post post = Post.builder().id(postId).build();
-//        Diary diary = Diary.builder().post(post).build();
-//        return diaryRepository.save(diary).getId();
-//    }
     @Override
     @Transactional
     public List<Long> createDiary(List<DiarySaveRequest> req) {
@@ -41,17 +33,6 @@ public class DiaryServiceImpl implements DiaryService {
         });
         return idList;
     }
-
-    @Override
-    public Diary getById(Long id) {
-        return diaryRepository.findById(id).orElseThrow(DiaryNotFoundException::new);
-    }
-
-    @Override
-    public List<Diary> getAllByPostId(Long postId) {
-        return diaryRepository.findAllByPost_Id(postId);
-    }
-
 
     @Override
     @Transactional

@@ -5,6 +5,7 @@ import com.example.travel_diary.global.domain.entity.ExpenseDetail;
 import com.example.travel_diary.global.domain.entity.User;
 import com.example.travel_diary.global.domain.repository.ExpenseDetailRepository;
 import com.example.travel_diary.global.domain.repository.ExpenseRepository;
+import com.example.travel_diary.global.exception.ExpenseDetailNotFoundException;
 import com.example.travel_diary.global.request.ExpenseDetailRequest;
 import com.example.travel_diary.global.response.ExpenseDetailByUserAndCountryResponseDto;
 import com.example.travel_diary.global.response.ExpenseDetailChartResponseDto;
@@ -25,69 +26,19 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ExpenseDetailServiceImpl implements ExpenseDetailService {
     private final ExpenseDetailRepository expenseDetailRepository;
-    private final ExpenseRepository expenseRepository;
-
-//    @Transactional
-//    @Override
-//    public void saveExpenseDetailByExpenseId(Long expenseId, List<ExpenseDetailRequest> requestDto) {
-//        Expense expense = expenseRepository.findById(expenseId).orElseThrow(EntityNotFoundException::new);
-//        List<ExpenseDetail> expenseDetails = requestDto.stream()
-//                .map(dto -> dto.toEntity(expense))  // Expense 객체를 포함하여 Entity 생성
-//                .collect(Collectors.toList());
-//        expenseDetailRepository.saveAll(expenseDetails);
-////        requestDto.forEach(e -> expenseDetailRepository.save(e.toEntity()));
-//
-////        expenseDetailRepository.save(requestDto.toEntity());
-//
-//   // public void saveExpenseDetail(ExpenseDetailRequestDto requestDto) {
-//     //   expenseDetailRepository.save(requestDto.toEntity());
-//
-//    }
 
     @Override
-    public ExpenseDetailResponseDto getExpenseDetailById(Long id) {
-        ExpenseDetail expenseDetail = expenseDetailRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        return ExpenseDetailResponseDto.from(expenseDetail);
-    }
-
-//    @Transactional
-//    @Override
-//    public void updateExpenseDetail(Long id, ExpenseDetailRequest requestDto) {
-//        ExpenseDetail expenseDetail = expenseDetailRepository.findById(id)
-//                .orElseThrow(EntityNotFoundException::new);
-//        expenseDetail.setCost(requestDto.cost());
-//        expenseDetail.setPlace(requestDto.place());
-//        expenseDetail.setCategory(requestDto.category());
-//    }
-
     @Transactional
-    @Override
-    public void deleteExpenseDetailById(Long id) {
-        ExpenseDetail expenseDetail = expenseDetailRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        expenseDetailRepository.deleteById(id);
+    public void saveExpenseDetails(Long expenseId, List<ExpenseDetailRequest> req) {
+        log.info(req.toString());
+        List<ExpenseDetail> details = expenseDetailRepository.findAllByExpense_Id(expenseId);
+        if (details.isEmpty()) req.forEach(el -> expenseDetailRepository.save(el.toEntity(expenseId)));
+        else {
+            expenseDetailRepository.deleteAllByExpense_Id(expenseId);
+            req.forEach(el -> expenseDetailRepository.save(el.toEntity(expenseId)));
+        }
     }
 
-    @Override
-    public List<ExpenseDetailByUserAndCountryResponseDto> getExpenseDetailByUserAndCountry(User user) {
-        List<ExpenseDetail> allAndPostUser = expenseDetailRepository.findAllByExpense_Post_User(user);
-        List<String> countryByUser = new ArrayList<>(); // 초기화
-        List<ExpenseDetailByUserAndCountryResponseDto> result = new ArrayList<>(); // 초기화
-        int total = 0;
-
-
-        return result;
-    }
-
-    @Override
-    public List<ExpenseDetailResponseDto> getExpenseDetailsByPostId(Long postId) {
-        List<ExpenseDetail> expenseDetails = expenseDetailRepository.findAllByExpense_Post_Id(postId);
-        return expenseDetails.stream()
-                .map(ExpenseDetailResponseDto::from)
-                .collect(Collectors.toList());
-
-    }
     @Override
     public List<ExpenseDetailChartResponseDto> getExpenseDetailChart(Long postId) {
         List<ExpenseDetail> allByExpensePostId = expenseDetailRepository.findAllByExpense_Post_Id(postId);
@@ -122,15 +73,12 @@ public class ExpenseDetailServiceImpl implements ExpenseDetailService {
 
     }
 
-    @Override
+
     @Transactional
-    public void saveExpenseDetails(Long expenseId, List<ExpenseDetailRequest> req) {
-        log.info(req.toString());
-        List<ExpenseDetail> details = expenseDetailRepository.findAllByExpense_Id(expenseId);
-        if (details.isEmpty()) req.forEach(el -> expenseDetailRepository.save(el.toEntity(expenseId)));
-        else {
-            expenseDetailRepository.deleteAllByExpense_Id(expenseId);
-            req.forEach(el -> expenseDetailRepository.save(el.toEntity(expenseId)));
-        }
+    @Override
+    public void deleteAllByExpenseId(Long expenseId) {
+        List<ExpenseDetail> expenseDetail = expenseDetailRepository.findAllByExpense_Id(expenseId);
+        if (expenseDetail.isEmpty()) throw new ExpenseDetailNotFoundException();
+        expenseDetailRepository.deleteAllByExpense_Id(expenseId);
     }
 }

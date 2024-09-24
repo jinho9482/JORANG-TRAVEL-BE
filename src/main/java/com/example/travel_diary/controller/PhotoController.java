@@ -4,6 +4,7 @@ import com.example.travel_diary.global.domain.entity.Photo;
 
 import com.example.travel_diary.global.request.PhotoRequest;
 import com.example.travel_diary.service.PhotoService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,44 +20,16 @@ import java.util.List;
 public class PhotoController {
     private final PhotoService photoService;
 
-
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void insert(@RequestParam(name = "diaryId") Long diaryId, @RequestParam(name = "file") MultipartFile[] files) throws IOException {
-//        System.out.println(diaryId);
-//        for (MultipartFile file : files) System.out.println(file);
-//        photoService.insert(diaryId, files);
-//    }
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void insert(PhotoRequest req) throws IOException {
-//        log.info(req.toString());
-//        photoService.insert(req);
-//    }
-
-    @GetMapping("/{id}")
-    public Photo getById(@PathVariable(name = "id") Long id) {
-        return photoService.getById(id);
-    }
-
-    @GetMapping("/diaries/{diaryId}")
-    public List<Photo> getByDiaryId(@PathVariable(name = "diaryId") Long diaryId) {
-        return photoService.getByDiaryId(diaryId);
-    }
-
-//    @PutMapping
-//    public void update(@RequestParam(name = "id") Long id, @RequestParam(name = "file") MultipartFile file) throws IOException {
-//        photoService.update(id, file);
-//    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "사진 저장")
     public void savePhotos(PhotoRequest req) throws IOException {
         log.info(req.toString());
         photoService.savePhotos(req);
     }
 
     @DeleteMapping("/{diaryId}")
+    @Operation(summary = "특정 여행기의 사진 지우기")
     public void deletePhotosByDiaryId(@PathVariable(name = "diaryId") Long diaryId) throws IOException {
         photoService.deletePhotosByDiaryId(diaryId);
     }

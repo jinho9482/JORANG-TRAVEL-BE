@@ -12,15 +12,7 @@ import java.util.UUID;
 public interface DiaryService {
 //    Long createDiary(Long postId);
     List<Long> createDiary(List<DiarySaveRequest> req);
-    Diary getById(Long id);
-    List<Diary> getAllByPostId(Long postId);
     void deleteDiaryById(Long id);
     void updateDiary(List<DiaryUpdateRequest> req);
-//    List<String> getDiaryByUserAndCountry(User user);
-
-//    String summarizeByPostId(Long postId);
-//
-//    String callPythonScript(List<Diary> dataList);
-
     List<String> getMyDiaryContents(User user);
 }
