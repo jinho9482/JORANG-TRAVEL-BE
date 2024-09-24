@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -37,6 +38,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     @Transactional
     public void insert(PhotoRequest req) throws IOException {
+        log.info(req.files()[0].toString());
         for (int i = 0; i < req.files().length; i++) {
             MultipartFile file = req.files()[i];
             String storagePath = "posts/" + req.postId() + "/diaries/" + req.diaryId() + "/images/" + (i+1);
