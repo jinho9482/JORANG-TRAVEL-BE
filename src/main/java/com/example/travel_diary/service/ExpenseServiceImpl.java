@@ -4,6 +4,7 @@ import com.example.travel_diary.global.domain.entity.Expense;
 import com.example.travel_diary.global.domain.entity.Post;
 import com.example.travel_diary.global.domain.repository.ExpenseRepository;
 import com.example.travel_diary.global.domain.repository.PostRepository;
+import com.example.travel_diary.global.exception.ExpenseNotFoundException;
 import com.example.travel_diary.global.request.ExpenseRequest;
 import com.example.travel_diary.global.response.ExpenseResponseDto;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,7 +27,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public void deleteExpenseById(Long id){
         Expense expense = expenseRepository.findById(id).orElseThrow(
-                EntityNotFoundException::new
+                ExpenseNotFoundException::new
         );
         expenseRepository.deleteById(id);
     }
