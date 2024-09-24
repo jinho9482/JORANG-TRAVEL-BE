@@ -73,7 +73,6 @@ public class ExpenseDetailServiceImpl implements ExpenseDetailService {
 
     }
 
-
     @Transactional
     @Override
     public void deleteAllByExpenseId(Long expenseId) {

@@ -56,9 +56,10 @@ public class LikeServiceImpl implements LikeService {
         Page<Like> likes = likeRepository.findAllByUser(user, pageable);
         int totalPage = likes.getTotalPages();
 
-        List<Long> postIds = likeRepository.findByUserPerPage(user.getId(), page * 10);
+        List<Long> postIds = likeRepository.findByUserPerPage(user.getId(), (page-1) * 10);
         log.info(postIds.toString());
         List<Post> posts = postIds.stream().map((postId) -> {
+            // 공개 post만 가져오기
             Post post = postService.getById(postId);
             return post;
         }).toList();
