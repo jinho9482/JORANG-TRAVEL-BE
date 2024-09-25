@@ -7,6 +7,7 @@ import com.example.travel_diary.global.response.LikePageResponse;
 import com.example.travel_diary.global.response.LikeResponse;
 import com.example.travel_diary.service.LikeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/likes")
 @RequiredArgsConstructor
+@Tag(name = "좋아요 기능")
 public class LikeController {
     private final LikeService likeService;
 
