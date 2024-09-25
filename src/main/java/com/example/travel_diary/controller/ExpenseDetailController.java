@@ -7,6 +7,7 @@ import com.example.travel_diary.global.response.ExpenseDetailChartResponseDto;
 import com.example.travel_diary.global.response.ExpenseDetailResponseDto;
 import com.example.travel_diary.service.ExpenseDetailService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/expense-details")
 @RequiredArgsConstructor
+@Tag(name = "여행 경비 상세")
 public class ExpenseDetailController {
     private final ExpenseDetailService expenseDetailService;
 

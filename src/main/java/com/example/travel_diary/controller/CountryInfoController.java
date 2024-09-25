@@ -5,6 +5,7 @@ import com.example.travel_diary.global.request.CountryInfoRequest;
 import com.example.travel_diary.service.AuthService;
 import com.example.travel_diary.service.CountryInfoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.parameters.P;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/country")
 @RequiredArgsConstructor
+@Tag(name = "나라 정보")
 public class CountryInfoController {
     private final CountryInfoService countryInfoService;
 
@@ -25,7 +27,7 @@ public class CountryInfoController {
         countryInfoService.createCountryInfo(req);
     }
 
-    @GetMapping("/info/{countryName}")
+    @GetMapping("/{countryName}")
     @Operation(summary = "여행지 정보 가져오기")
     public CountryInfo getByCountryName(@PathVariable(name = "countryName") String countryName) {
         return countryInfoService.getByName(countryName);

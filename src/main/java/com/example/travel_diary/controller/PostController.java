@@ -7,6 +7,7 @@ import com.example.travel_diary.global.request.PostTempRequest;
 import com.example.travel_diary.global.response.CountryCostDto;
 import com.example.travel_diary.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping("api/v1/posts")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "여행 일지")
 public class PostController {
     private final PostService postService;
 

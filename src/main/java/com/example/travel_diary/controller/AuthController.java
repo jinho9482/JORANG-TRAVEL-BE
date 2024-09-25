@@ -17,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/auths")
 @RequiredArgsConstructor
+@Tag(name = "유저 인증")
 public class AuthController {
     private final AuthService authService;
 

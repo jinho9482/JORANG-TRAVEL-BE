@@ -5,6 +5,7 @@ import com.example.travel_diary.global.domain.entity.Photo;
 import com.example.travel_diary.global.request.PhotoRequest;
 import com.example.travel_diary.service.PhotoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("api/v1/photos")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "사진")
 public class PhotoController {
     private final PhotoService photoService;
 
