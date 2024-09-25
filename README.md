@@ -32,126 +32,15 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 ### Infra Framework
 ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
    
-## 프로젝트 구조
+## API 명세서 (with Swagger API)<br>
 
-📦src<br>
-┣ 📂main<br>
-┃ ┣ 📂generated<br>
-┃ ┣ 📂java<br>
-┃ ┃ ┗ 📂com<br>
-┃ ┃ ┃ ┗ 📂example<br>
-┃ ┃ ┃ ┃ ┗ 📂travel_diary<br>
-┃ ┃ ┃ ┃ ┃ ┣ 📂controller<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂exceptionController<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthExceptionController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryExceptionController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoExceptionController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostExceptionController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CountryInfoController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LikeController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoController.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostController.java<br>
-┃ ┃ ┃ ┃ ┃ ┣ 📂global<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂config<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomSecurityConfig.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ElasticSearchConfig.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂elasticSearch<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostDocument.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CountryInfo.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Diary.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Expense.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetail.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FindLoginIdEmailSender.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FindPasswordEmailSender.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Like.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PasswordGenerator.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Photo.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Post.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CountryInfoRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LikeRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂type<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Scope.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂exception<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryNotFoundException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜EmailAlreadyExistsException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginFailedException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginIdAlreadyExistsException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoLimitExceededException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoNotFoundException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostNotFoundException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostNotPublicException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserNotFoundException.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FindLoginIdRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FindPasswordRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SignInRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SignUpRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateUserRequestDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailByUserAndCountryResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailChartResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailChartTempResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜GetUserByIdResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LikeResponse.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginInResponseDto.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostResponse.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂utils<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtAuthenticationFilter.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜JwtUtil.java<br>
-┃ ┃ ┃ ┃ ┃ ┣ 📂service<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CountryInfoService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CountryInfoServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DiaryServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseDetailServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LikeService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LikeServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PhotoServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostSearchService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostService.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostServiceImpl.java<br>
-┃ ┃ ┃ ┃ ┃ ┗ 📜TravelDiaryApplication.java<br>
-┃ ┗ 📂resources<br>
-┃ ┃ ┣ 📜application-prod.yml<br>
-┃ ┃ ┗ 📜application.yml<br>
-┗ 📂test<br>
-┃ ┗ 📂java<br>
-┃ ┃ ┗ 📂com<br>
-┃ ┃ ┃ ┗ 📂example<br>
-┃ ┃ ┃ ┃ ┗ 📂travel_diary<br>
-┃ ┃ ┃ ┃ ┃ ┣ 📂service<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthServiceImplTest.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExpenseServiceTest.java<br>
-┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostServiceImplTest.java<br>
-┃ ┃ ┃ ┃ ┃ ┗ 📜TravelDiaryApplicationTests.java<br>
+<img width="646" alt="image" src="https://github.com/user-attachments/assets/92663c50-4e9d-4999-8d83-f0537bcfcf93">
+<img width="646" alt="image" src="https://github.com/user-attachments/assets/565b3874-3ff7-4443-8403-f9eb0ab16aef">
+<img width="646" alt="image" src="https://github.com/user-attachments/assets/36b1dcf7-77d2-44cd-9dfb-51c53cd68f3f">
+<img width="644" alt="image" src="https://github.com/user-attachments/assets/a6ecbe69-e0de-4173-99c3-f64060e60a5b">
+<img width="646" alt="image" src="https://github.com/user-attachments/assets/f6ec63b3-d629-432d-ad87-b43d735bc22e">
+<br>
+
 
 ## 🔗 ERD
 ![image](https://github.com/user-attachments/assets/4266a2da-99d2-4027-a9fe-c7a8451c26a4)
