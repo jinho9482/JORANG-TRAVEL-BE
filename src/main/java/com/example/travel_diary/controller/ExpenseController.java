@@ -5,6 +5,7 @@ import com.example.travel_diary.global.request.ExpenseRequest;
 import com.example.travel_diary.global.response.ExpenseResponseDto;
 import com.example.travel_diary.service.ExpenseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/expenses")
 @RequiredArgsConstructor
+@Tag(name = "날짜별 여행 경비")
 public class ExpenseController {
     private final ExpenseService expenseService;
 

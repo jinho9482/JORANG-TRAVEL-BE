@@ -6,6 +6,7 @@ import com.example.travel_diary.global.request.DiarySaveRequest;
 import com.example.travel_diary.global.request.DiaryUpdateRequest;
 import com.example.travel_diary.service.DiaryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/diaries")
 @RequiredArgsConstructor
+@Tag(name = "여행기")
 public class DiaryController {
     private final DiaryService diaryService;
 
