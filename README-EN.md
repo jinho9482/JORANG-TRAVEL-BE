@@ -12,7 +12,7 @@
 - Send a temporary password via email when a user ID or email is changed
 
 ### Full Project
-https://github.com/jinho9482/JORANG-TRAVEL
+https://github.com/encore-full-stack-5/JORANG-TRAVEL
 
 ### Langchain Server
 https://github.com/encore-full-stack-5/JORANG_LANGCHAIN_SERVER
