@@ -11,8 +11,8 @@
 - Sort travel logs by latest and most liked, and filter by travel period
 - Send a temporary password via email when a user ID or email is changed
 
-### Full Project Introduction
-https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
+### Full Project
+https://github.com/jinho9482/JORANG-TRAVEL
 
 ### Langchain Server
 https://github.com/encore-full-stack-5/JORANG_LANGCHAIN_SERVER
