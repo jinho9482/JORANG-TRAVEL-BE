@@ -45,6 +45,11 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 ## 🔗 ERD
 ![image](https://github.com/user-attachments/assets/4266a2da-99d2-4027-a9fe-c7a8451c26a4)
 
+##  <br>🔧 성능 개선 사항
+
+<img width="954" alt="image" src="https://github.com/user-attachments/assets/aa1b5689-9617-4647-86c1-6b09eedacfea">
+
+
 ##  🔧 트러블 슈팅
 
 **1. Google cloud storage를 사용할 때 Front에서 file type의 input을 보낼 때 이로부터 파일 경로를 읽어올 수 없음<br><br>**
