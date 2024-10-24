@@ -34,11 +34,14 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
    
 ## API Documentation (with Swagger API)<br>
 
-<img width="646" alt="image" src="https://github.com/user-attachments/assets/92663c50-4e9d-4999-8d83-f0537bcfcf93">
-<img width="646" alt="image" src="https://github.com/user-attachments/assets/565b3874-3ff7-4443-8403-f9eb0ab16aef">
-<img width="646" alt="image" src="https://github.com/user-attachments/assets/36b1dcf7-77d2-44cd-9dfb-51c53cd68f3f">
-<img width="644" alt="image" src="https://github.com/user-attachments/assets/a6ecbe69-e0de-4173-99c3-f64060e60a5b">
-<img width="646" alt="image" src="https://github.com/user-attachments/assets/f6ec63b3-d629-432d-ad87-b43d735bc22e">
+<img width="640" alt="image" src="https://github.com/user-attachments/assets/ce387d91-2d3f-4adf-988e-ecc3f375c0d4">
+
+<img width="643" alt="image" src="https://github.com/user-attachments/assets/dc7060e0-0f9c-4011-b8b3-6c28ad1fec5f">
+
+<img width="638" alt="image" src="https://github.com/user-attachments/assets/7c91f1d7-2db0-4a38-badc-a4f994caf25a">
+
+<img width="644" alt="image" src="https://github.com/user-attachments/assets/6720c674-fd60-4a76-887b-e133823d9727">
+
 <br>
 
 
