@@ -46,7 +46,11 @@ https://github.com/encore-full-stack-5/JORANG-TRAVEL-FE
 
 
 ## 🔗 ERD
-![image](https://github.com/user-attachments/assets/4266a2da-99d2-4027-a9fe-c7a8451c26a4)
+![image](https://github.com/user-attachments/assets/4266a2da-99d2-4027-a9fe-c7a8451c26a4
+
+##  <br>🔧 Performance Improvements
+<img width="944" alt="image" src="https://github.com/user-attachments/assets/1762e867-8090-461d-b2df-2426c5cabbee">
+
 
 ##  🔧 Troubleshooting
 
