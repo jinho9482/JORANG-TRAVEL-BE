@@ -12,7 +12,7 @@
 - 유저 아이디, 이메일 변경 시 이메일로 임시 비밀번호 발송
 
 ### 전체 프로젝트 소개
-https://github.com/jinho9482/JORANG-TRAVEL
+https://github.com/encore-full-stack-5/JORANG-TRAVEL
 
 ### Langchain server
 https://github.com/encore-full-stack-5/JORANG_LANGCHAIN_SERVER
